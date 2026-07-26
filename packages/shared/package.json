@@ -1,5 +1,6 @@
 {
   "name": "@movie-ticket-booking/shared",
+  "type": "module",
   "exports": {
     "./constants": "./constants.ts",
     "./types": "./types.ts"
