@@ -1,7 +1,8 @@
 import { env } from "@movie-ticket-booking/env/server";
-import Redis from "ioredis";
+import { Redis } from "ioredis";
+import * as RedisModule from "ioredis"
 
-const globalObject = global as unknown as { redisClient: any };
+const globalObject = global as unknown as { redisClient: RedisModule.Redis };
 
 function createRedisClient() {
   let redis = new Redis(env.REDIS_URL, {
