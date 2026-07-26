@@ -13,6 +13,7 @@ import {
 import { useProfile } from "@/hooks/query/useProfile";
 import ErrorComponent from "@/components/error";
 import { useAuth } from "@/components/providers/auth-provider";
+import { redirect } from "next/navigation";
 
 function Field({
   label,
@@ -203,6 +204,10 @@ export default function ProfilePage() {
     console.log(userProfile.data);
     setProfile(userProfile.data);
   }, [userProfile.data]);
+
+  if (session === null) {
+    redirect("/auth")
+  }
 
   if (!profile || userProfile.isPending) {
     return (

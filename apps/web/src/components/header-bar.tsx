@@ -33,5 +33,5 @@ export default function HeaderBar({ children }: { children: ReactNode }) {
       </div>
       {children}
     </>
-  );
+  )
 }
