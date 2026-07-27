@@ -19,16 +19,8 @@ theatres and shows.
 <img width="1903" height="920" alt="create-show" src="https://github.com/user-attachments/assets/a52304f4-f731-47c2-b02d-44cba279fc87" />
 
 
-## Features
+## Brainstorming
 
-- **TypeScript** - For type safety and improved developer experience
-- **Next.js** - Full-stack React framework
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
-- **Express** - Fast, unopinionated web framework
-- **Bun** - Runtime environment
-- **Prisma** - TypeScript-first ORM
-- **PostgreSQL** - Database engine
-- **Authentication** - Better-Auth
-- **Turborepo** - Optimized monorepo build system
+<img width="909" height="553" alt="mbs" src="https://github.com/user-attachments/assets/7a5f5268-4482-4b24-892c-442b37ad1d9c" />
+<img width="933" height="830" alt="dbschema" src="https://github.com/user-attachments/assets/478e624c-78dc-44ec-9f0e-0dfa4da58f0f" />
 
