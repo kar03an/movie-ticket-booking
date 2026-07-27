@@ -39,7 +39,7 @@ export default function AuthPage() {
           email,
           password,
           name,
-          image: undefined
+          image: ""
         },
         {
           onSuccess: () => {

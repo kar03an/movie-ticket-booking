@@ -25,6 +25,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
           email: value.email,
           password: value.password,
           name: value.name,
+          image: ""
         },
         {
           onSuccess: () => {

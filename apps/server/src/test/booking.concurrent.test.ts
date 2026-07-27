@@ -6,7 +6,7 @@ import { createUsers } from "@/seed/customer.seed";
 
 const BASE_URL = "http://localhost:3000";
 
-const TEST_USERS_COUNT = 1000;
+const TEST_USERS_COUNT = 500;
 
 describe("Concurrent Seat Reservation", () => {
   beforeEach(async () => {

@@ -8,6 +8,8 @@ import { apiErrorHandler } from "./middlewares";
 import "@movie-ticket-booking/cache";
 import webhookRouter from "./routes/webhookRouter";
 
+console.log("NODE_ENV value: ", env.NODE_ENV)
+
 const app = express();
 
 app.use(

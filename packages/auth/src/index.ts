@@ -49,13 +49,6 @@ export function createAuth() {
           returned: true,
           defaultValue: false,
         },
-        image: {
-          type: "string",
-          required: false,
-          input: false,
-          returned: true,
-          defaultValue: false,
-        },
       },
     },
   });
