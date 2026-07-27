@@ -29,7 +29,7 @@ export function useMoviesList() {
   const searchString = debouncedSearch.trim();
   const isSearching = searchString.length > 0;
 
-  const moviesFeedQuery = useMoviesFeed(region);
+  const moviesFeedQuery = useMoviesFeed(1, 100);
   const moviesSearchQuery = useSearchMovies(searchString);
 
   function updateQuery(key: string, value: string) {
@@ -46,7 +46,7 @@ export function useMoviesList() {
 
   useEffect(() => {
     if (isSearching) return; // search results effect below takes over
-    setMovies(moviesFeedQuery.data ?? []);
+    setMovies(moviesFeedQuery.data?.data?.movies ?? []);
   }, [moviesFeedQuery.data, isSearching]);
 
   useEffect(() => {

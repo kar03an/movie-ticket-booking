@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { env } from "@movie-ticket-booking/env/web";
-import type { Region, TMDBMoviesType } from "@movie-ticket-booking/shared/types";
+import type { TMDBMoviesType } from "@movie-ticket-booking/shared/types";
 import { useQuery } from "@tanstack/react-query";
 
 interface MoviesResponse {
@@ -10,10 +10,18 @@ interface MoviesResponse {
   };
 }
 
-export function useMoviesFeed(region: Region) {
-  return useQuery<TMDBMoviesType[]>({
-    queryKey: ["fetch-movies-feed"],
-    queryFn: () => fetchFeedMovies(region),
+export interface MoviesFeedResponse {
+  movies: TMDBMoviesType[];
+  totalCount: number;
+  totalPages: number;
+  page: number;
+  limit: number;
+}
+
+export function useMoviesFeed(page: number = 1, limit: number = 8) {
+  return useQuery<{ data: MoviesFeedResponse }>({
+    queryKey: ["fetch-movies-feed", page, limit],
+    queryFn: () => fetchFeedMovies(page, limit),
   });
 }
 
@@ -33,13 +41,17 @@ async function searchMovies(searchString: string) {
   return res.json();
 }
 
-async function fetchFeedMovies(region: Region) {
-  const url = env.NEXT_PUBLIC_SERVER_URL + `/movies/feed`;
+async function fetchFeedMovies(page: number, limit: number) {
+  const url = `${env.NEXT_PUBLIC_SERVER_URL}/movies/feed?page=${page}&limit=${limit}`;
   const res = await fetch(url, {
     method: "GET",
-    body: JSON.stringify({
-      region,
-    }),
   });
-  return res.json();
+  if (!res.ok) {
+    throw new Error("Failed to fetch movies feed");
+  }
+  const json = await res.json();
+  if (!json.success) {
+    throw new Error(json.message || "Failed to fetch movies feed");
+  }
+  return json;
 }

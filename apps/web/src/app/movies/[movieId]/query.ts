@@ -40,8 +40,15 @@ export function useMovieWithTimings(movieId: string) {
   });
 }
 
-async function fetchMovieDetailsWithTimings(movieId: string) {
+async function fetchMovieDetailsWithTimings(movieId: string): Promise<MovieResponse> {
   const url = `${env.NEXT_PUBLIC_SERVER_URL}/movies/${movieId}/timings`;
   const res = await fetch(url);
-  return res.json();
+  if (!res.ok) {
+    throw new Error(`Failed to fetch movie timings`);
+  }
+  const json = await res.json();
+  if (!json.success) {
+    throw new Error(json.message || "Failed to fetch movie timings");
+  }
+  return json.data;
 }

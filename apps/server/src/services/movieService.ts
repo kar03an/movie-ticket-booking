@@ -167,3 +167,50 @@ export async function getShowSeats(showId: string) {
     throw new ServerApiError("DB Error: Failed to query movie details", 500, err);
   }
 }
+
+export async function getMoviesFeed(page: number, limit: number) {
+  try {
+    const offset = (page - 1) * limit;
+    const currDate = new Date();
+
+    const [movies, totalCount] = await Promise.all([
+      prisma.movie.findMany({
+        where: {
+          shows: {
+            some: {
+              startTime: {
+                gte: currDate,
+              },
+            },
+          },
+        },
+        skip: offset,
+        take: limit,
+        orderBy: {
+          release_date: "desc",
+        },
+      }),
+      prisma.movie.count({
+        where: {
+          shows: {
+            some: {
+              startTime: {
+                gte: currDate,
+              },
+            },
+          },
+        },
+      }),
+    ]);
+
+    return {
+      movies,
+      totalCount,
+      totalPages: Math.ceil(totalCount / limit),
+      page,
+      limit,
+    };
+  } catch (err) {
+    throw new ServerApiError("DB Error: Failed to query movies feed", 500, err);
+  }
+}

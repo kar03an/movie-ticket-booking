@@ -5,6 +5,7 @@ import {
   getMovieDetailsAndTheatres,
   getMovies,
   getShowSeats,
+  getMoviesFeed,
 } from "@/services/movieService";
 import { reserveTheatreMovieSeat, verifySeatReservationForUser } from "@/services/seatService";
 import { tmdbSearchMovies } from "@/services/tmdbMovieService";
@@ -60,11 +61,15 @@ export async function createMovieContoller(req: Request, res: Response, next: Ne
   }
 }
 
-export async function getMoviesFeedController(_req: Request, _res: Response, _next: NextFunction) {
+export async function getMoviesFeedController(req: Request, res: Response, next: NextFunction) {
   try {
-    // TODO:current fetch feed
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 8;
+
+    const data = await getMoviesFeed(page, limit);
+    return res.status(200).json(apiJsonResponse(true, data, "Successfully fetched movies feed"));
   } catch (error) {
-    throw new ServerApiError("Failed to fetch movies feed", 500);
+    next(error);
   }
 }
 
@@ -212,7 +217,7 @@ export async function buyMovieSeatController(req: Request, res: Response, next: 
     }
     const verified = await verifySeatReservationForUser(customer.id, showSeatId);
     if (!verified) {
-      throw new ServerApiError("Seat is reserved for the user trying to buy the seat", 401);
+      throw new ServerApiError("Seat is not reserved for the user trying to buy the seat", 401);
     }
 
     // create draft order and payment with pending states, store payment providers id

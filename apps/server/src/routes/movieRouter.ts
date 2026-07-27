@@ -37,6 +37,13 @@ const GetMovieValidationSchema: ValidationSchemaType = {
 
 const GetMovieWithTimingValidationSchema: ValidationSchemaType = GetMovieValidationSchema;
 
+const GetMoviesFeedValidationSchema: ValidationSchemaType = {
+  query: z.object({
+    page: z.coerce.number().optional().default(1),
+    limit: z.coerce.number().optional().default(8),
+  }),
+};
+
 const GetTheatreMovieValidationSchema: ValidationSchemaType = {
   params: z.object({
     movieId: z.string().min(1),
@@ -79,7 +86,12 @@ moviesRouter.post("/", authRequired, validateRequest(CreateMovieRequestSchema), 
 
 moviesRouter.get("/", getMoviesController);
 
-moviesRouter.get("/feed", getMoviesFeedController);
+// get movie with available theatres with timing
+moviesRouter.get(
+  "/feed",
+  validateRequest(GetMoviesFeedValidationSchema),
+  getMoviesFeedController,
+);
 
 moviesRouter.get("/search", validateRequest(MovieSearchRequestSchema), searchMovieController);
 
