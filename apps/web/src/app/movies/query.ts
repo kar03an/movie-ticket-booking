@@ -18,7 +18,7 @@ export interface MoviesFeedResponse {
   limit: number;
 }
 
-export function useMoviesFeed(page: number = 1, limit: number = 8) {
+export function useMoviesFeed(page: number = 1, limit: number = 10) {
   return useQuery<{ data: MoviesFeedResponse }>({
     queryKey: ["fetch-movies-feed", page, limit],
     queryFn: () => fetchFeedMovies(page, limit),

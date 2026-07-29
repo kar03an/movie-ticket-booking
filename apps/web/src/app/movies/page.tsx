@@ -13,7 +13,7 @@ export default function MoviesPage() {
   const auth = useAuth();
   const { search, setSearch, movies: searchMovies, isPending: isSearchPending, isError: isSearchError, clearFilters } = useMoviesList();
   const [feedPage, setFeedPage] = useState(1);
-  const feedLimit = 8;
+  const feedLimit = 10;
   const { data: feedData, isPending: isFeedPending, isError: isFeedError } = useMoviesFeed(feedPage, feedLimit);
 
   if (auth === null) redirect("/auth");

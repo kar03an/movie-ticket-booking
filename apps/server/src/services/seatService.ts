@@ -77,6 +77,7 @@ export async function reserveTheatreMovieSeat(customerId: string, showSeatId: st
           status: "SOLD",
         },
       });
+
       // optimistic approach
       if (!updatedResult || updatedResult.count !== 1) {
         return false;
@@ -109,11 +110,14 @@ export async function verifySeatReservationForUser(customerId: string, showSeatI
       reservedAt: "desc",
     },
   });
-  if (!reservedSeats) return false;
+  if (!reservedSeats || reservedSeats.length === 0) return false;
   const firstReservation = reservedSeats[0];
   const reservedTime = new Date(firstReservation!.reservedAt);
-  const expirationTimeStamp = new Date(reservedTime.getMinutes() + firstReservation!.duration);
+
+  const expirationTimeStamp = new Date(reservedTime);
+  expirationTimeStamp.setMinutes(expirationTimeStamp.getMinutes() + firstReservation!.duration);
   const currTimeStamp = new Date();
+
   if (expirationTimeStamp < currTimeStamp) {
     return false;
   }

@@ -33,10 +33,10 @@ export default function MovieCard({ movie, user }: { movie: TMDBMoviesType; user
 
         <div className="flex flex-wrap gap-1.5">
           <span className="text-[0.6875rem] font-medium text-white/50 bg-white/6 border border-white/8 rounded py-0.5 px-1.5 tracking-[0.03em]">
-            {new Date(movie.release_date).getFullYear()}
+            {new Date(movie.release_date).getFullYear() ?? ""}
           </span>
           <span className="text-[0.6875rem] font-medium text-white/50 bg-white/6 border border-white/8 rounded py-0.5 px-1.5 tracking-[0.03em]">
-            {movie.original_language.toUpperCase()}
+            {movie.original_language.toUpperCase() ?? ""}
           </span>
         </div>
 

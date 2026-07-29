@@ -1,11 +1,12 @@
 import { ServerApiError, stripe } from "@/lib";
 import {
   createMovie,
-  getMovieDetails,
   getMovieDetailsAndTheatres,
   getMovies,
   getShowSeats,
   getMoviesFeed,
+  getMovieDetailsbyTmdbMovieId,
+  getMovieDetailsbyDbMovieId,
 } from "@/services/movieService";
 import { reserveTheatreMovieSeat, verifySeatReservationForUser } from "@/services/seatService";
 import { tmdbSearchMovies } from "@/services/tmdbMovieService";
@@ -100,12 +101,13 @@ export async function getMovieController(req: Request, res: Response, next: Next
     const movieId = req.params.movieId as string;
     if (!movieId) throw new ServerApiError("Invalid movie id provided", 401);
 
-    const tmdbMovieId = Number(movieId);
-    if (!tmdbMovieId || isNaN(tmdbMovieId)) {
-      throw new ServerApiError("Invalid movie id provided", 401);
+    let tmdbMovieId = Number(movieId);
+    let movies;
+    if (tmdbMovieId || !isNaN(tmdbMovieId)) {
+      movies = await getMovieDetailsbyTmdbMovieId(tmdbMovieId);
+    } else {
+      movies = await getMovieDetailsbyDbMovieId(movieId);
     }
-
-    const movies = await getMovieDetails(tmdbMovieId);
     return res.status(200).json(apiJsonResponse(true, movies, "Successfully fetched movie"));
   } catch (err) {
     next(err);
@@ -212,8 +214,10 @@ export async function buyMovieSeatController(req: Request, res: Response, next: 
     const customer = await prisma.customer.findUnique({
       where: { userId: user.id },
     });
-    if (!customer) {
-      throw new ServerApiError("Unauthorized user making request to buy ticket", 402);
+    console.log("cust", customer)
+    if (!customer || !customer.id) {
+      console.log("throwing invalid customer")
+      throw new ServerApiError("Unauthorized customer making request to buy ticket", 402);
     }
     const verified = await verifySeatReservationForUser(customer.id, showSeatId);
     if (!verified) {

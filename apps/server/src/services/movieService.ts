@@ -94,7 +94,7 @@ export async function getMovieDetailsAndTheatres(movieId: string) {
   }
 }
 
-export async function getMovieDetails(tmdbMovieId: number) {
+export async function getMovieDetailsbyTmdbMovieId(tmdbMovieId: number) {
   try {
     let dbMovie = await prisma.movie.findUnique({
       where: {
@@ -107,6 +107,24 @@ export async function getMovieDetails(tmdbMovieId: number) {
       return movie;
     }
     return dbMovie;
+  } catch (error) {
+    throw new ServerApiError("DB Error: Failed to fetch movie", 500, error);
+  }
+}
+
+export async function getMovieDetailsbyDbMovieId(movieId: string) {
+  try {
+    let dbMovie = await prisma.movie.findUnique({
+      where: {
+        id: movieId,
+      },
+    });
+    if (!dbMovie) {
+      throw "Invalid movie id provided";
+    }
+    let movie = (await tmdbGetMovieById(dbMovie.tmdbMovieId)) as TMDBMovieType & { tmdbMovieId: number };
+    movie.tmdbMovieId = dbMovie.tmdbMovieId;
+    return movie;
   } catch (error) {
     throw new ServerApiError("DB Error: Failed to fetch movie", 500, error);
   }
