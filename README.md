@@ -10,7 +10,8 @@ theatres and shows.
 <img width="1920" height="1050" alt="book ticket" src="https://github.com/user-attachments/assets/df08a40b-6ec2-484d-b258-4df798a0947f" />
 
 **Reserve and buy show seat**
-<img width="1920" height="1008" alt="buy seat " src="https://github.com/user-attachments/assets/18c90748-2078-4179-8a8a-cafb0f015374" />
+<img width="1920" height="1050" alt="reserve-seat" src="https://github.com/user-attachments/assets/4982cb43-fd19-42e2-bbb4-efbb414407c0" />
+
 
 **Manage your theatre's seat layout**
 <img width="1903" height="922" alt="manage-theatre-seat-layout" src="https://github.com/user-attachments/assets/2d4e6eff-2688-45a0-a96b-d5ebd3176469" />
