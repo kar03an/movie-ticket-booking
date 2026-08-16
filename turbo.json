@@ -7,6 +7,22 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
+    "build#server": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "CORS_ORIGIN",
+        "DATABASE_URL",
+        "REDIS_URL",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET",
+        "TMDB_READ_ACCESS_TOKEN",
+        "TMDB_API_KEY",
+        "RESEND_API_KEY"
+      ],
+      "outputs": ["dist/**"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },
