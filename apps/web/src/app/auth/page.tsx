@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { Eye, EyeOff, Film, Loader2 } from "lucide-react";
-import Link from "next/link";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import type { Route } from "next";
+import GoogleSignInButton from "@/components/auth/google-sign-in-button";
+import { Suspense } from "react";
 
 type Mode = "signin" | "signup";
 
-export default function AuthPage() {
+function AuthPageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: session, isPending: sessionPending } = authClient.useSession();
 
   const [mode, setMode] = useState<Mode>("signin");
@@ -28,6 +30,13 @@ export default function AuthPage() {
       router.replace(session.user.isOnboarded ? ("/movies" as Route) : ("/onboarding" as Route));
     }
   }, [session, sessionPending, router]);
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (!error) return;
+    toast.error(error === "access_denied" ? "Google sign-in was cancelled." : "Google sign-in failed. Please try again.");
+    router.replace("/auth" as Route);
+  }, [searchParams, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,6 +138,21 @@ export default function AuthPage() {
                 ? "Sign in to book your seats and manage your tickets."
                 : "Join Mtb to start booking movie tickets in seconds."}
             </p>
+          </div>
+
+          <GoogleSignInButton
+            label={mode === "signin" ? "Continue with Google" : "Sign up with Google"}
+          />
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-zinc-800" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-zinc-900 px-3 text-xs uppercase tracking-wide text-zinc-600">
+                or continue with email
+              </span>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -233,5 +257,19 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+        </div>
+      }
+    >
+      <AuthPageInner />
+    </Suspense>
   );
 }

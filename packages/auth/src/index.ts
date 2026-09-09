@@ -1,5 +1,5 @@
 import { createPrismaClient } from "@movie-ticket-booking/db";
-import { env } from "@movie-ticket-booking/env/server";
+import { env, trustedOrigins } from "@movie-ticket-booking/env/server";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { afterSignupHook, beforeSignupHook } from "./authHooks";
@@ -13,10 +13,23 @@ export function createAuth() {
       provider: "postgresql",
     }),
 
-    trustedOrigins: [env.CORS_ORIGIN],
+    trustedOrigins,
     emailAndPassword: {
       enabled: true,
       minPasswordLength: 8,
+    },
+    socialProviders: {
+      google: {
+        clientId: env.GOOGLE_CLIENT_ID,
+        clientSecret: env.GOOGLE_CLIENT_SECRET,
+        prompt: "select_account",
+      },
+    },
+    account: {
+      accountLinking: {
+        enabled: true,
+        trustedProviders: ["google"],
+      },
     },
     secret: env.BETTER_AUTH_SECRET,
     baseURL: env.BETTER_AUTH_URL,

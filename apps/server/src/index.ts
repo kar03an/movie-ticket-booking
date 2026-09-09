@@ -1,5 +1,5 @@
 import { auth } from "@movie-ticket-booking/auth";
-import { env } from "@movie-ticket-booking/env/server";
+import { env, trustedOrigins } from "@movie-ticket-booking/env/server";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
@@ -14,9 +14,14 @@ const app = express();
 
 app.use(
   cors({
-    origin: env.CORS_ORIGIN,
-    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: (origin, callback) => {
+      if (!origin || trustedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error(`Not allowed by CORS: ${origin}`));
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
 );

@@ -13,6 +13,8 @@
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_URL",
         "CORS_ORIGIN",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
         "DATABASE_URL",
         "REDIS_URL",
         "STRIPE_SECRET_KEY",
