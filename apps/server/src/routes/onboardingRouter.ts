@@ -1,4 +1,4 @@
-import { authRequired } from "../middlewares";
+import { authRequired } from "../middlewares/index";
 import express, { type Router } from "express";
 import { onboardingController } from "../controllers/onboardingController";
 

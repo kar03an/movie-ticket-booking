@@ -9,7 +9,7 @@ import {
   getMoviesFeedController,
   getMovieController,
 } from "../controllers/movieController";
-import { authRequired, validateRequest, type ValidationSchemaType } from "../middlewares";
+import { authRequired, validateRequest, type ValidationSchemaType } from "../middlewares/index";
 import z from "zod";
 import { createMovieContoller } from "../controllers/movieController";
 

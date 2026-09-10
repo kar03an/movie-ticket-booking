@@ -3,8 +3,8 @@ import { env, trustedOrigins } from "@movie-ticket-booking/env/server";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
-import apiRouter from "./routes";
-import { apiErrorHandler } from "./middlewares";
+import apiRouter from "./routes/index";
+import { apiErrorHandler } from "./middlewares/index";
 import "@movie-ticket-booking/cache";
 import webhookRouter from "./routes/webhookRouter";
 
@@ -41,6 +41,10 @@ app.get("/health", (_req, res) => {
   res.status(200).send("OK");
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
-});
+export default app;
+
+if (process.env.VERCEL !== "1") {
+  app.listen(3000, () => {
+    console.log("Server is running on http://localhost:3000");
+  });
+}

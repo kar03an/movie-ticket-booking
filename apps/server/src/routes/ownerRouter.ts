@@ -4,7 +4,7 @@ import {
   createTheatreContoller,
   getShowController,
 } from "../controllers/ownerController";
-import { validateRequest, type ValidationSchemaType } from "../middlewares";
+import { validateRequest, type ValidationSchemaType } from "../middlewares/index";
 import z from "zod";
 import {
   createSeatsController,

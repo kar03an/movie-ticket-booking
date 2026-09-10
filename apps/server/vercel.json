@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "bunVersion": "1.x",
-  "outputDirectory": "dist"
+  "framework": "express",
+  "buildCommand": "bun run --filter=@movie-ticket-booking/db db:generate",
+  "build": {
+    "env": {
+      "VERCEL_EXPERIMENTAL_BACKENDS": "1",
+      "VERCEL_ENABLE_EXPERIMENTAL_BUILD_MODE": "1"
+    }
+  }
 }
