@@ -41,10 +41,10 @@ app.get("/health", (_req, res) => {
   res.status(200).send("OK");
 });
 
-export default app;
+// export default app;
 
-if (process.env.VERCEL !== "1") {
+// if (process.env.VERCEL !== "1") {
   app.listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
   });
-}
+// }
