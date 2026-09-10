@@ -3,8 +3,8 @@ import { env, trustedOrigins } from "@movie-ticket-booking/env/server";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
-import apiRouter from "./routes/index";
-import { apiErrorHandler } from "./middlewares/index";
+import apiRouter from "./routes";
+import { apiErrorHandler } from "./middlewares";
 import "@movie-ticket-booking/cache";
 import webhookRouter from "./routes/webhookRouter";
 
