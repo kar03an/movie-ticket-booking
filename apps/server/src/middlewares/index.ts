@@ -1,6 +1,6 @@
 import type { ProfileType, AuthenticatedRequest } from "@movie-ticket-booking/shared/types";
 import type { NextFunction, Request, Response } from "express";
-import { ServerApiError } from "@/lib";
+import { ServerApiError } from "../lib";
 
 export * from "./authRequired";
 export * from "./errorHandler";

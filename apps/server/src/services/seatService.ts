@@ -1,4 +1,4 @@
-import { ServerApiError } from "@/lib";
+import { ServerApiError } from "../lib";
 import prisma from "@movie-ticket-booking/db";
 import type { ShowSeat } from "@movie-ticket-booking/shared/types";
 import { SEAT_RESERVATION_DURATION } from "@movie-ticket-booking/shared/constants";

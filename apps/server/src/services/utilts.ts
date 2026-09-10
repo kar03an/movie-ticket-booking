@@ -1,4 +1,4 @@
-import { ServerApiError } from "@/lib";
+import { ServerApiError } from "../lib";
 
 // try catch wrapper
 export function createService<ServiceArgs extends unknown[], ServiceResult>(

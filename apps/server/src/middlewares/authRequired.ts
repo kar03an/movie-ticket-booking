@@ -1,4 +1,4 @@
-import { apiJsonResponse } from "@/utils";
+import { apiJsonResponse } from "../utils";
 import { auth } from "@movie-ticket-booking/auth";
 import { fromNodeHeaders } from "better-auth/node";
 import type { Request, Response, NextFunction } from "express";

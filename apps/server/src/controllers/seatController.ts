@@ -1,6 +1,6 @@
-import { ServerApiError } from "@/lib";
-import { createSeatsBulk, deleteSeatsBulk } from "@/services/seatService";
-import { apiJsonResponse } from "@/utils";
+import { ServerApiError } from "../lib";
+import { createSeatsBulk, deleteSeatsBulk } from "../services/seatService";
+import { apiJsonResponse } from "../utils";
 import prisma from "@movie-ticket-booking/db";
 import type { Seat } from "@movie-ticket-booking/shared/types";
 import type { NextFunction, Request, Response } from "express";

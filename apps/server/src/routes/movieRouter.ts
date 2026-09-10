@@ -8,10 +8,10 @@ import {
   searchMovieController,
   getMoviesFeedController,
   getMovieController,
-} from "@/controllers/movieController";
-import { authRequired, validateRequest, type ValidationSchemaType } from "@/middlewares";
+} from "../controllers/movieController";
+import { authRequired, validateRequest, type ValidationSchemaType } from "../middlewares";
 import z from "zod";
-import { createMovieContoller } from "@/controllers/movieController";
+import { createMovieContoller } from "../controllers/movieController";
 
 const CreateMovieRequestSchema: ValidationSchemaType = {
   body: z.object({

@@ -1,6 +1,6 @@
-import { authRequired } from "@/middlewares";
+import { authRequired } from "../middlewares";
 import express, { type Router } from "express";
-import { onboardingController } from "@/controllers/onboardingController";
+import { onboardingController } from "../controllers/onboardingController";
 
 const onboardingRouter: Router = express.Router();
 

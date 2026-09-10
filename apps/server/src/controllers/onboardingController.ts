@@ -1,7 +1,7 @@
-import { apiJsonResponse } from "@/utils";
+import { apiJsonResponse } from "../utils";
 import { type Request, type Response } from "express";
 import type { AuthenticatedRequest } from "@movie-ticket-booking/shared/types";
-import { onboardCustomer, onboardOwner } from "@/services/onboardingService";
+import { onboardCustomer, onboardOwner } from "../services/onboardingService";
 
 export async function onboardingController(req: Request, res: Response) {
   const request = req as unknown as AuthenticatedRequest;

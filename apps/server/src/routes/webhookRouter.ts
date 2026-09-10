@@ -1,4 +1,4 @@
-import { ServerApiError, stripe } from "@/lib";
+import { ServerApiError, stripe } from "../lib";
 import { env } from "@movie-ticket-booking/env/server";
 import sendTicketJob from "@movie-ticket-booking/queue";
 import type { SendTicketJobDataType } from "@movie-ticket-booking/shared/types";

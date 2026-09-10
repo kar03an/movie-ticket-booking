@@ -1,9 +1,5 @@
-import { defineConfig } from 'vitest/config';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [tsconfigPaths()], // This injects your tsconfig mappings automatically
-  test: {
-    // Your other Vitest configurations
-  },
+  test: {},
 });

@@ -1,10 +1,10 @@
-import { ServerApiError } from "@/lib";
-import { createTheatre, theatreNumOfSeats, addMovieToTheatre } from "@/services/ownerService";
-import { tmdbGetMovieById } from "@/services/tmdbMovieService";
-import { apiJsonResponse, isValidDateInstance } from "@/utils";
+import { ServerApiError } from "../lib";
+import { createTheatre, theatreNumOfSeats, addMovieToTheatre } from "../services/ownerService";
+import { tmdbGetMovieById } from "../services/tmdbMovieService";
+import { apiJsonResponse, isValidDateInstance } from "../utils";
 import prisma from "@movie-ticket-booking/db";
 import type { NextFunction, Request, Response } from "express";
-import { getTheatreActiveShows } from "@/services/showService";
+import { getTheatreActiveShows } from "../services/showService";
 import type { Show, TMDBMovieType } from "@movie-ticket-booking/shared/types";
 
 export async function createTheatreContoller(req: Request, res: Response, next: NextFunction) {

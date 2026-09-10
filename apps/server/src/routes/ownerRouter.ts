@@ -3,15 +3,15 @@ import {
   addMovieToTheatreController,
   createTheatreContoller,
   getShowController,
-} from "@/controllers/ownerController";
-import { validateRequest, type ValidationSchemaType } from "@/middlewares";
+} from "../controllers/ownerController";
+import { validateRequest, type ValidationSchemaType } from "../middlewares";
 import z from "zod";
 import {
   createSeatsController,
   deleteSeatsController,
   getSeatsController,
   udpateSeatLayoutController,
-} from "@/controllers/seatController";
+} from "../controllers/seatController";
 
 const ownerRouter: Router = express.Router();
 

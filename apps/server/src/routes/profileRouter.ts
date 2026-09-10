@@ -1,5 +1,5 @@
-import { getProfileController, updateProfileController } from "@/controllers/profileController";
-import { authRequired } from "@/middlewares";
+import { getProfileController, updateProfileController } from "../controllers/profileController";
+import { authRequired } from "../middlewares";
 import express, { type Router } from "express";
 
 const profileRouter: Router = express.Router();

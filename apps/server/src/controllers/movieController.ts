@@ -1,4 +1,4 @@
-import { ServerApiError, stripe } from "@/lib";
+import { ServerApiError, stripe } from "../lib";
 import {
   createMovie,
   getMovieDetailsAndTheatres,
@@ -7,10 +7,10 @@ import {
   getMoviesFeed,
   getMovieDetailsbyTmdbMovieId,
   getMovieDetailsbyDbMovieId,
-} from "@/services/movieService";
-import { reserveTheatreMovieSeat, verifySeatReservationForUser } from "@/services/seatService";
-import { tmdbSearchMovies } from "@/services/tmdbMovieService";
-import { apiJsonResponse, convertIntoSmallestCurrencyUnit, minutesToSeconds } from "@/utils";
+} from "../services/movieService";
+import { reserveTheatreMovieSeat, verifySeatReservationForUser } from "../services/seatService";
+import { tmdbSearchMovies } from "../services/tmdbMovieService";
+import { apiJsonResponse, convertIntoSmallestCurrencyUnit, minutesToSeconds } from "../utils";
 import redisClient from "@movie-ticket-booking/cache";
 import prisma from "@movie-ticket-booking/db";
 import { SEAT_RESERVATION_DURATION } from "@movie-ticket-booking/shared/constants";

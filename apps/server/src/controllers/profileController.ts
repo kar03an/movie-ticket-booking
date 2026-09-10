@@ -1,6 +1,6 @@
-import { ServerApiError } from "@/lib";
-import { getUserProfile, updateUserProfile } from "@/services/profileService";
-import { apiJsonResponse } from "@/utils";
+import { ServerApiError } from "../lib";
+import { getUserProfile, updateUserProfile } from "../services/profileService";
+import { apiJsonResponse } from "../utils";
 import type { Request, Response } from "express";
 import z from "zod";
 

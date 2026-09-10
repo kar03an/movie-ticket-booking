@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import prisma from "@movie-ticket-booking/db";
 import redisClient from "@movie-ticket-booking/cache";
-import { createBookingFixture } from "@/seed/bookingFixture.seed";
-import { createUsers } from "@/seed/customer.seed";
+import { createBookingFixture } from "../seed/bookingFixture.seed";
+import { createUsers } from "../seed/customer.seed";
 
 const BASE_URL = "http://localhost:3000";
 

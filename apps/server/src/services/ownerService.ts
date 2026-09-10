@@ -1,4 +1,4 @@
-import { ServerApiError } from "@/lib";
+import { ServerApiError } from "../lib";
 import prisma from "@movie-ticket-booking/db";
 import type {
   Theatre,

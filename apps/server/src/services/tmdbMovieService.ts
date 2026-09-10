@@ -1,4 +1,4 @@
-import { ServerApiError } from "@/lib";
+import { ServerApiError } from "../lib";
 import { env } from "@movie-ticket-booking/env/server";
 import type { TMDBMovieSearchFilter, TMDBMoviesType, TMDBMovieType } from "@movie-ticket-booking/shared/types";
 

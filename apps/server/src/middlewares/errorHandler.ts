@@ -1,5 +1,5 @@
-import type { ServerApiError } from "@/lib";
-import { apiJsonResponse } from "@/utils";
+import type { ServerApiError } from "../lib";
+import { apiJsonResponse } from "../utils";
 import type { Request, Response, NextFunction } from "express";
 
 export function apiErrorHandler(
