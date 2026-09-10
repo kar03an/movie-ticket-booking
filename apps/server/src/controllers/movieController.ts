@@ -249,9 +249,7 @@ export async function buyMovieSeatController(req: Request, res: Response, next: 
           // Amount value must be in the smallest currency unit (e.g., cents for USD)
           amount: convertIntoSmallestCurrencyUnit(amount, currency),
           currency: currency,
-          automatic_payment_methods: {
-            enabled: true,
-          },
+          payment_method_types: ["card"],
           metadata: {
             customerId: result.customerId,
             orderId: result.id,
