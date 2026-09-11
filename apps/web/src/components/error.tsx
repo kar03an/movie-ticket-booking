@@ -8,13 +8,10 @@ interface ErrorComponentProps {
 
 export default function ErrorComponent({ message, link = null, linkText = null }: ErrorComponentProps) {
   return (
-    <div className="w-full flex flex-col gap-2 justify-center pt-64 items-center">
-      <div className="text-gray-500">{message}</div>
+    <div className="flex w-full flex-col items-center justify-center gap-4 px-6 py-24">
+      <p className="font-display text-xl text-muted-foreground">{message}</p>
       {link && (
-        <Link
-          href={link}
-          className="bg-[#2d050c] border-2 hover:brightness-110 transition-all duration-150 shadow-[2px] hover:shadow-[4px] shadow-gray-400 px-4 py-1.5 hover:cursor-pointer text-sm text-[#d75857] rounded-md"
-        >
+        <Link href={link} className="btn-cinema text-sm">
           {linkText}
         </Link>
       )}

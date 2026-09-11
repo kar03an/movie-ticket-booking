@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import type { Route } from "next";
 import GoogleSignInButton from "@/components/auth/google-sign-in-button";
+import AmbientGlow from "@/components/layout/ambient-glow";
 import { Suspense } from "react";
 
 type Mode = "signin" | "signup";
@@ -81,8 +82,8 @@ function AuthPageInner() {
 
   if (sessionPending) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -90,26 +91,22 @@ function AuthPageInner() {
   // Prevent rendering while redirecting
   if (session) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
   return (
-    <div className="bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center px-4 py-12 pt-28">
-      {/* Background glow */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-150 h-100 rounded-full bg-red-600/10 blur-3xl" />
-      </div>
+    <div className="relative flex flex-col items-center justify-center px-4 py-16">
+      <AmbientGlow />
 
-      {/* Card */}
-      <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl overflow-hidden">
-        <div className="h-1 bg-linear-to-r from-red-700 via-red-500 to-orange-400" />
+      <div className="surface-card relative z-10 w-full max-w-md">
+        <div className="h-1 bg-linear-to-r from-burgundy via-primary to-gold" />
 
         <div className="px-8 py-8">
           {/* Tab switcher */}
-          <div className="flex rounded-xl bg-zinc-800/60 p-1 mb-8">
+          <div className="flex rounded-xl bg-secondary/60 p-1 mb-8">
             {(["signin", "signup"] as Mode[]).map((m) => (
               <button
                 key={m}
@@ -121,7 +118,7 @@ function AuthPageInner() {
                   setPassword("");
                 }}
                 className={`flex-1 hover:cursor-pointer rounded-lg py-2 text-sm font-semibold transition-all ${
-                  mode === m ? "bg-zinc-700 text-zinc-100 shadow" : "text-zinc-500 hover:text-zinc-300"
+                  mode === m ? "bg-muted text-foreground shadow" : "text-muted-foreground hover:text-foreground/90"
                 }`}
               >
                 {m === "signin" ? "Sign In" : "Sign Up"}
@@ -130,10 +127,10 @@ function AuthPageInner() {
           </div>
 
           <div className="mb-6">
-            <h1 className="text-2xl font-bold text-zinc-100">
+            <h1 className="text-2xl font-bold text-foreground">
               {mode === "signin" ? "Welcome back" : "Create your account"}
             </h1>
-            <p className="mt-1 text-sm text-zinc-500">
+            <p className="mt-1 text-sm text-muted-foreground">
               {mode === "signin"
                 ? "Sign in to book your seats and manage your tickets."
                 : "Join Mtb to start booking movie tickets in seconds."}
@@ -146,10 +143,10 @@ function AuthPageInner() {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-zinc-800" />
+              <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-zinc-900 px-3 text-xs uppercase tracking-wide text-zinc-600">
+              <span className="bg-card px-3 text-xs uppercase tracking-wide text-muted-foreground">
                 or continue with email
               </span>
             </div>
@@ -158,7 +155,7 @@ function AuthPageInner() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === "signup" && (
               <div className="space-y-1.5">
-                <label htmlFor="name" className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+                <label htmlFor="name" className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Full Name
                 </label>
                 <input
@@ -169,13 +166,13 @@ function AuthPageInner() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ada Lovelace"
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+                  className="field-input"
                 />
               </div>
             )}
 
             <div className="space-y-1.5">
-              <label htmlFor="email" className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+              <label htmlFor="email" className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Email
               </label>
               <input
@@ -186,12 +183,12 @@ function AuthPageInner() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="ada@example.com"
-                className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+                className="field-input"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="password" className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+              <label htmlFor="password" className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Password
               </label>
 
@@ -205,13 +202,13 @@ function AuthPageInner() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Min. 8 characters"
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 px-4 py-3 pr-11 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+                  className="field-input pr-11"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground/90"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -221,7 +218,7 @@ function AuthPageInner() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full mt-2 flex items-center hover:cursor-pointer justify-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/40 hover:bg-red-500 disabled:bg-zinc-700"
+              className="btn-cinema mt-2 w-full"
             >
               {isSubmitting ? (
                 <>
@@ -237,8 +234,8 @@ function AuthPageInner() {
           </form>
         </div>
 
-        <div className="border-t border-zinc-800 px-8 py-4 text-center">
-          <p className="text-xs text-zinc-600">
+        <div className="border-t border-border px-8 py-4 text-center">
+          <p className="text-xs text-muted-foreground">
             {mode === "signin" ? "Don't have an account? " : "Already have an account? "}
 
             <button
@@ -249,7 +246,7 @@ function AuthPageInner() {
                 setEmail("");
                 setPassword("");
               }}
-              className="text-zinc-400 underline underline-offset-2 hover:text-zinc-200"
+              className="text-muted-foreground underline underline-offset-2 hover:text-foreground"
             >
               {mode === "signin" ? "Sign up" : "Sign in"}
             </button>
@@ -264,8 +261,8 @@ export default function AuthPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
         </div>
       }
     >

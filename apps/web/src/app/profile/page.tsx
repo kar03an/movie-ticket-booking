@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Building2, Mail, MapPin, Tag, Loader2, Save, ArrowLeft, Film } from "lucide-react";
+import { Building2, Mail, MapPin, Tag, Loader2, Save, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { Route } from "next";
+import AmbientGlow from "@/components/layout/ambient-glow";
 import {
   useProfileMtn,
   type CustomerProfile,
@@ -36,12 +37,12 @@ function Field({
 }) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+      <label htmlFor={id} className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         {label}
       </label>
       <div className="relative">
         {Icon && (
-          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 pointer-events-none" />
+          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
         )}
         <input
           id={id}
@@ -50,7 +51,7 @@ function Field({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          className={`w-full rounded-xl border border-zinc-700 bg-zinc-800/60 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15 disabled:opacity-50 disabled:cursor-not-allowed ${Icon ? "pl-10 pr-4" : "px-4"}`}
+          className={`field-input ${Icon ? "pl-10 pr-4" : "px-4"}`}
         />
       </div>
     </div>
@@ -101,7 +102,7 @@ function CustomerProfileForm({
       <button
         type="submit"
         disabled={isSaving || !isDirty || !name.trim() || !emailVal.trim()}
-        className="flex items-center hover:cursor-pointer mt-4 gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/40 transition-all hover:bg-red-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400 disabled:shadow-none"
+        className="btn-cinema mt-4"
       >
         {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
         {isSaving ? "Saving…" : "Save Changes"}
@@ -176,7 +177,7 @@ function BusinessProfileForm({
       <button
         type="submit"
         disabled={isSaving || !isDirty || !isValid}
-        className="flex items-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/40 transition-all hover:bg-red-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400 disabled:shadow-none"
+        className="btn-cinema mt-4"
       >
         {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
         {isSaving ? "Saving…" : "Save Changes"}
@@ -211,8 +212,8 @@ export default function ProfilePage() {
 
   if (!profile || userProfile.isPending) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -233,47 +234,31 @@ export default function ProfilePage() {
       .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      {/* Background glow */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-150 h-100 rounded-full bg-red-600/8 blur-3xl" />
-      </div>
-
-      {/* Nav */}
-      <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-2xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <Film className="h-5 w-5 text-red-500" />
-            <span className="font-semibold tracking-tight text-zinc-100">
-              Mtb<span className="text-red-500">.</span>
-            </span>
-          </Link>
-          <Link
-            href={"/movies" as Route}
-            className="flex items-center gap-1.5 text-sm text-zinc-400 hover:text-zinc-200 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to movies
-          </Link>
-        </div>
-      </header>
-
-      <main className="max-w-2xl mx-auto px-6 py-10 space-y-8">
+    <div className="relative">
+      <AmbientGlow />
+      <main className="relative mx-auto max-w-2xl space-y-8 px-6 py-10">
+        <Link
+          href={"/movies" as Route}
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to movies
+        </Link>
         {/* Avatar + identity */}
         <div className="flex items-center gap-5">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-red-600/15 text-red-400 text-xl font-bold select-none">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary text-xl font-bold select-none">
             {initials}
           </div>
           <div className="flex">
-            <h1 className="text-2xl font-bold text-zinc-100">{isCustomer ? user.customer?.name : ""}</h1>
+            <h1 className="text-2xl font-bold text-foreground">{isCustomer ? user.customer?.name : ""}</h1>
           </div>
         </div>
 
         {/* Form card */}
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden">
-          <div className="h-1 bg-linear-to-r from-red-700 via-red-500 to-orange-400" />
+        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+          <div className="h-1 bg-linear-to-r from-burgundy via-primary to-gold" />
           <div className="px-6 py-6">
-            <h2 className="text-sm font-semibold text-zinc-300 mb-5">
+            <h2 className="text-sm font-semibold text-foreground/90 mb-5">
               {isCustomer ? "Account Details" : "Theatre Details"}
             </h2>
 
@@ -286,10 +271,10 @@ export default function ProfilePage() {
             )}
 
             {isCustomer && !user.customer && (
-              <p className="text-sm text-zinc-500">No customer profile found. Please complete onboarding.</p>
+              <p className="text-sm text-muted-foreground">No customer profile found. Please complete onboarding.</p>
             )}
             {!isCustomer && !user.theatre && (
-              <p className="text-sm text-zinc-500">No theatre profile found. Please complete onboarding.</p>
+              <p className="text-sm text-muted-foreground">No theatre profile found. Please complete onboarding.</p>
             )}
           </div>
         </div>

@@ -3,6 +3,8 @@ import { Fraunces, Archivo, JetBrains_Mono } from "next/font/google";
 
 import "../index.css";
 import Providers from "@/components/providers/providers";
+import HeaderBar from "@/components/header-bar";
+import SiteFooter from "@/components/layout/site-footer";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -38,10 +40,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${fraunces.variable} ${archivo.variable} ${jetbrainsMono.variable} antialiased`}>
+      <body className={`${fraunces.variable} ${archivo.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`}>
         <Providers>
-          <div className="flex justify-center items-center">
-            <div className="w-full">{children}</div>
+          <div className="flex min-h-screen flex-col">
+            <HeaderBar />
+            <div className="flex-1">{children}</div>
+            <SiteFooter />
           </div>
         </Providers>
       </body>

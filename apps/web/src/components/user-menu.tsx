@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogOut, User, ChevronDown, Film, ChartBarIcon, Armchair, Popcorn, Clapperboard } from "lucide-react";
+import { LogOut, User, ChevronDown, Film, Armchair, Clapperboard } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useState, useRef, useEffect } from "react";
 import type { Route } from "next";
@@ -25,14 +25,14 @@ export default function UserMenu() {
   }, []);
 
   if (isPending) {
-    return <div className="h-9 w-9 rounded-xl bg-zinc-800 animate-pulse" />;
+    return <div className="h-9 w-9 rounded-xl bg-muted animate-pulse" />;
   }
 
   if (!session) {
     return (
       <Link
         href={"/auth" as Route}
-        className="rounded-xl border border-zinc-700 bg-zinc-800/60 px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:border-zinc-600 hover:text-zinc-100"
+        className="rounded-xl border border-border bg-secondary/60 px-4 py-2 text-sm font-semibold text-foreground/90 transition hover:border-primary/40 hover:text-foreground"
       >
         Sign In
       </Link>
@@ -66,29 +66,29 @@ export default function UserMenu() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="true"
-        className="flex hover:cursor-pointer items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-800/60 px-2.5 py-1.5 text-sm transition hover:border-zinc-600 hover:bg-zinc-800"
+        className="flex hover:cursor-pointer items-center gap-2 rounded-xl border border-border bg-secondary/60 px-2.5 py-1.5 text-sm transition hover:border-primary/40 hover:bg-muted"
       >
         {/* Avatar */}
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-red-600/20 text-xs font-bold text-red-400 select-none">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-xs font-bold text-primary select-none">
           {initials}
         </span>
-        <span className="max-w-30 truncate text-zinc-300 font-medium hidden sm:block">{displayName}</span>
+        <span className="max-w-30 truncate text-foreground/90 font-medium hidden sm:block">{displayName}</span>
         <ChevronDown
-          className={`h-3.5 w-3.5 text-zinc-500 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+          className={`h-3.5 w-3.5 text-muted-foreground transition-transform duration-150 ${open ? "rotate-180" : ""}`}
         />
       </button>
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl shadow-black/50 overflow-hidden z-50 animate-in fade-in slide-in-from-top-1 duration-100">
+        <div className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-border bg-card shadow-2xl shadow-black/50 overflow-hidden z-50 animate-in fade-in slide-in-from-top-1 duration-100">
           {/* User info header */}
-          <div className="px-4 py-3 border-b border-zinc-800">
+          <div className="px-4 py-3 border-b border-border">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-600/15 text-sm font-bold text-red-400 select-none">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-sm font-bold text-primary select-none">
                 {initials}
               </span>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-zinc-100 truncate">{displayName}</p>
+                <p className="text-sm font-semibold text-foreground truncate">{displayName}</p>
               </div>
             </div>
           </div>
@@ -98,17 +98,17 @@ export default function UserMenu() {
             <Link
               href={"/profile" as Route}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-zinc-300 transition hover:bg-zinc-800 hover:text-zinc-100"
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-foreground/90 transition hover:bg-muted hover:text-foreground"
             >
-              <User className="h-4 w-4 text-zinc-500" />
+              <User className="h-4 w-4 text-muted-foreground" />
               View Profile
             </Link>
             <Link
               href={"/movies" as Route}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-zinc-300 transition hover:bg-zinc-800 hover:text-zinc-100"
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-foreground/90 transition hover:bg-muted hover:text-foreground"
             >
-              <Film className="h-4 w-4 text-zinc-500" />
+              <Film className="h-4 w-4 text-muted-foreground" />
               Browse Movies
             </Link>
             {(user.role === "OWNER" || user.role === "ADMIN") && (
@@ -116,36 +116,36 @@ export default function UserMenu() {
                 <Link
                   href={"/dashboard/seats" as Route}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-zinc-300 transition hover:bg-zinc-800 hover:text-zinc-100"
+                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-foreground/90 transition hover:bg-muted hover:text-foreground"
                 >
-                  <Armchair className="h-4 w-4 text-zinc-500" />
+                  <Armchair className="h-4 w-4 text-muted-foreground" />
                   Manage Seats
                 </Link>
                 <Link
-                  href={"/dashboard/seats" as Route}
+                  href={"/dashboard/movies" as Route}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-zinc-300 transition hover:bg-zinc-800 hover:text-zinc-100"
+                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-foreground/90 transition hover:bg-muted hover:text-foreground"
                 >
-                  <Film className="h-4 w-4 text-zinc-500" />
+                  <Film className="h-4 w-4 text-muted-foreground" />
                   Create Show
                 </Link>
                 <Link
                   href={"/dashboard/shows" as Route}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-zinc-300 transition hover:bg-zinc-800 hover:text-zinc-100"
+                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-foreground/90 transition hover:bg-muted hover:text-foreground"
                 >
-                  <Clapperboard className="h-4 w-4 text-zinc-500" />
+                  <Clapperboard className="h-4 w-4 text-muted-foreground" />
                   Active Shows
                 </Link>
               </>
             )}
           </div>
 
-          <div className="border-t border-zinc-800 py-1">
+          <div className="border-t border-border py-1">
             <button
               type="button"
               onClick={handleSignOut}
-              className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 transition hover:bg-red-600/10 hover:text-red-300"
+              className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-primary transition hover:bg-primary/10 hover:text-primary"
             >
               <LogOut className="h-4 w-4" />
               Sign Out

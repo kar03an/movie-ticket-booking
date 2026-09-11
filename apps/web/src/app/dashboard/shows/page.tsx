@@ -21,26 +21,26 @@ export default function TheatreShows() {
 
   if (activeShowsQuery.isPending) {
     return (
-      <div className="pt-64 bg-zinc-950 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+      <div className="pt-64 bg-background flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
   if (activeShowsQuery.isPending) {
     return (
-      <div className="pt-64 bg-zinc-950 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+      <div className="pt-64 bg-background flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
   if (activeShowsQuery.isError) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[#09090b] px-6">
+      <div className="grid min-h-screen place-items-center bg-background px-6">
         <div className="max-w-sm text-center">
-          <p className="text-sm font-medium text-red-400">Couldn't load theatre shows</p>
-          <p className="mt-1 text-sm text-zinc-500">{activeShowsQuery.error.message}</p>
+          <p className="text-sm font-medium text-primary">Couldn't load theatre shows</p>
+          <p className="mt-1 text-sm text-muted-foreground">{activeShowsQuery.error.message}</p>
         </div>
       </div>
     );
@@ -50,7 +50,7 @@ export default function TheatreShows() {
     <div className="w-full h-full p-8">
       {movieShow.length > 0 && (
         <div className="w-full">
-          <h1 className="mt-2 mb-6 flex justify-center ml-1 text-2xl font-semibold tracking-tight text-zinc-50">
+          <h1 className="mt-2 mb-6 flex justify-center ml-1 text-2xl font-semibold tracking-tight text-foreground">
             Current Active Shows
           </h1>
           {session?.user && (

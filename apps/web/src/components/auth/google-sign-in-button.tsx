@@ -60,7 +60,7 @@ export default function GoogleSignInButton({ label }: { label: string }) {
       type="button"
       onClick={handleGoogle}
       disabled={isLoading}
-      className="w-full flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/60 px-6 py-3 text-sm font-semibold text-zinc-100 transition hover:cursor-pointer hover:bg-zinc-800 hover:border-zinc-600 disabled:cursor-not-allowed disabled:opacity-60"
+      className="w-full flex items-center justify-center gap-2.5 rounded-xl border border-border bg-secondary/60 px-6 py-3 text-sm font-semibold text-foreground transition hover:cursor-pointer hover:bg-muted hover:border-primary/40 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {isLoading ? (
         <Loader2 className="h-4 w-4 animate-spin" />

@@ -14,9 +14,9 @@ export function SortFiltersPanel({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="mt-4 p-5 bg-white/3 border border-white/[0.07] rounded-xl flex flex-col gap-4 animate-[slideDown_0.2s_ease]">
+    <div className="mt-4 flex animate-[slideDown_0.2s_ease] flex-col gap-4 rounded-xl border border-border bg-card/60 p-5">
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start">
-        <span className="text-xs font-semibold text-white/35 uppercase tracking-[0.08em] whitespace-nowrap pt-1.5 min-w-14">
+        <span className="min-w-14 pt-1.5 text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase whitespace-nowrap">
           Sort by
         </span>
         <div className="flex flex-wrap gap-2">
@@ -24,10 +24,10 @@ export function SortFiltersPanel({
             <button
               key={opt.value}
               onClick={() => onChange(opt.value)}
-              className={`py-[0.3rem] px-3 rounded-full text-[0.8125rem] [font-family:var(--body,'Archivo',sans-serif)] cursor-pointer transition-all duration-150 border ${
+              className={`cursor-pointer rounded-full border px-3 py-[0.3rem] font-sans text-[0.8125rem] transition-all duration-150 ${
                 sortBy === opt.value
-                  ? "bg-[#dc2626]/20 border-[#dc2626]/50 text-[#fca5a5]"
-                  : "bg-white/5 border-white/8 text-white/55 hover:text-[#fafafa] hover:border-white/20"
+                  ? "border-primary/50 bg-primary/15 text-primary"
+                  : "border-border bg-muted/40 text-muted-foreground hover:border-primary/30 hover:text-foreground"
               }`}
             >
               {opt.label}

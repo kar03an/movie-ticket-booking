@@ -16,7 +16,7 @@ export default function MoviesPage() {
   if (!auth) return null;
 
   return (
-    <div className="min-h-screen w-full bg-[#09090b] text-[#fafafa] [font-family:var(--body,'Archivo',sans-serif)]">
+    <div className="w-full pb-16">
       <HeroHeader search={search} setSearch={setSearch} showRegion={false} />
 
       {showFilters && <SortFiltersPanel sortBy={sortBy} onChange={setSortBy} />}
@@ -33,6 +33,7 @@ export default function MoviesPage() {
           search={search}
           user={auth.user}
           onShowAll={clearFilters}
+          preview={Boolean(search.trim())}
         />
       </main>
     </div>

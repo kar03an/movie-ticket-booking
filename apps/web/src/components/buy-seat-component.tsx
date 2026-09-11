@@ -104,26 +104,26 @@ export default function BuyTheatreMovieSeat({
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 py-8 gap-6">
       {/* Card */}
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl">
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
         {/* Decorative top gradient */}
-        <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-red-700 via-red-500 to-orange-400" />
+        <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-burgundy via-primary to-gold" />
 
         {/* Ticket header */}
-        <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-zinc-800">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600/15 text-red-400">
+        <div className="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-border">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-primary">
             <Ticket className="h-5 w-5" />
           </span>
           <div>
-            <p className="text-xs uppercase tracking-widest text-zinc-500 font-medium">Booking Summary</p>
-            <h2 className="text-lg font-bold text-zinc-100 leading-tight">{movieTitle}</h2>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Booking Summary</p>
+            <h2 className="text-lg font-bold text-foreground leading-tight">{movieTitle}</h2>
           </div>
         </div>
 
         {/* Dashed divider (ticket perforation) */}
         <div className="relative flex items-center px-6 py-0">
-          <div className="absolute -left-3 h-6 w-6 rounded-full bg-zinc-950 border border-zinc-800" />
-          <div className="flex-1 border-t border-dashed border-zinc-700" />
-          <div className="absolute -right-3 h-6 w-6 rounded-full bg-zinc-950 border border-zinc-800" />
+          <div className="absolute -left-3 h-6 w-6 rounded-full bg-background border border-border" />
+          <div className="flex-1 border-t border-dashed border-border" />
+          <div className="absolute -right-3 h-6 w-6 rounded-full bg-background border border-border" />
         </div>
 
         {/* Details grid */}
@@ -131,11 +131,11 @@ export default function BuyTheatreMovieSeat({
           {/* Theatre */}
           {theatreData && (
             <div className="col-span-2 flex items-start gap-3">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-wide text-zinc-500">Theatre</p>
-                <p className="text-sm font-semibold text-zinc-100">{theatreData.title}</p>
-                <p className="text-xs text-zinc-500">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Theatre</p>
+                <p className="text-sm font-semibold text-foreground">{theatreData.title}</p>
+                <p className="text-xs text-muted-foreground">
                   {theatreData.address}, {theatreData.city}, {theatreData.country}
                 </p>
               </div>
@@ -145,10 +145,10 @@ export default function BuyTheatreMovieSeat({
           {/* Date */}
           {showTime && (
             <div className="flex items-start gap-3">
-              <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+              <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-wide text-zinc-500">Date</p>
-                <p className="text-sm font-semibold text-zinc-100">{formatDate(showTime.start)}</p>
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Date</p>
+                <p className="text-sm font-semibold text-foreground">{formatDate(showTime.start)}</p>
               </div>
             </div>
           )}
@@ -156,12 +156,12 @@ export default function BuyTheatreMovieSeat({
           {/* Time */}
           {showTime && (
             <div className="flex items-start gap-3">
-              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-wide text-zinc-500">Show Time</p>
-                <p className="text-sm font-semibold text-zinc-100">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Show Time</p>
+                <p className="text-sm font-semibold text-foreground">
                   {formatTime(showTime.start)}
-                  <span className="text-zinc-500 mx-1">–</span>
+                  <span className="text-muted-foreground mx-1">–</span>
                   {formatTime(showTime.end)}
                 </p>
               </div>
@@ -170,10 +170,10 @@ export default function BuyTheatreMovieSeat({
 
           {/* Seat */}
           <div className="flex items-start gap-3">
-            <Armchair className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+            <Armchair className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
             <div>
-              <p className="text-xs uppercase tracking-wide text-zinc-500">Seat</p>
-              <p className="text-sm font-semibold text-zinc-100">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">Seat</p>
+              <p className="text-sm font-semibold text-foreground">
                 Row {selectedSeat.seat.row} · Seat {selectedSeat.seat.col}
               </p>
             </div>
@@ -181,31 +181,31 @@ export default function BuyTheatreMovieSeat({
 
           {/* Price */}
           <div className="flex items-start gap-3">
-            <Tag className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+            <Tag className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
             <div>
-              <p className="text-xs uppercase tracking-wide text-zinc-500">Price</p>
-              <p className="text-sm font-semibold text-zinc-100">₹{selectedSeat.price.toFixed(2)}</p>
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">Price</p>
+              <p className="text-sm font-semibold text-foreground">₹{selectedSeat.price.toFixed(2)}</p>
             </div>
           </div>
         </div>
 
         {/* Dashed divider (bottom perforation) */}
         <div className="relative flex items-center px-6 py-0">
-          <div className="absolute -left-3 h-6 w-6 rounded-full bg-zinc-950 border border-zinc-800" />
-          <div className="flex-1 border-t border-dashed border-zinc-700" />
-          <div className="absolute -right-3 h-6 w-6 rounded-full bg-zinc-950 border border-zinc-800" />
+          <div className="absolute -left-3 h-6 w-6 rounded-full bg-background border border-border" />
+          <div className="flex-1 border-t border-dashed border-border" />
+          <div className="absolute -right-3 h-6 w-6 rounded-full bg-background border border-border" />
         </div>
 
         {/* Total */}
         <div className="flex items-center justify-between px-6 py-5">
-          <span className="text-sm font-semibold text-zinc-400">Total</span>
-          <span className="text-2xl font-bold text-zinc-100">₹{selectedSeat.price.toFixed(2)}</span>
+          <span className="text-sm font-semibold text-muted-foreground">Total</span>
+          <span className="text-2xl font-bold text-foreground">₹{selectedSeat.price.toFixed(2)}</span>
         </div>
       </div>
 
       {/* Error message */}
       {isError && (
-        <p className="text-sm text-red-400 text-center max-w-sm">
+        <p className="text-sm text-primary text-center max-w-sm">
           {(buySeatMutation.error as Error)?.message || "Something went wrong. Please try again."}
         </p>
       )}
@@ -216,12 +216,12 @@ export default function BuyTheatreMovieSeat({
         id="buy-seat-btn"
         onClick={handleBuy}
         disabled={isPending}
-        className="flex items-center gap-2 rounded-xl bg-red-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-red-900/40 transition-all hover:bg-red-500 hover:shadow-red-800/50 active:scale-95 disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400 disabled:shadow-none"
+        className="btn-cinema"
       >
         <CreditCard className="h-4 w-4" />
         {isPending ? "Redirecting to payment…" : "Pay & Confirm Booking"}
       </button>
-      <p className="text-xs text-zinc-600">Secure payment powered by Stripe</p>
+      <p className="text-xs text-muted-foreground">Secure payment powered by Stripe</p>
     </div>
   );
 }

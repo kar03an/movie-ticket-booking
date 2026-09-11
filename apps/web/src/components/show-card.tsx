@@ -1,45 +1,41 @@
-import Link from "next/link";
-import { Star, Clock, ChevronRight } from "lucide-react";
+import { Star } from "lucide-react";
 import type { Route } from "next";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { Movie, Show } from "@movie-ticket-booking/shared/types";
 import type { ClientSessionUser } from "./providers/auth-provider";
-import { formatTime } from "@/lib/utils";
 import { format } from "date-fns";
+import { MoviePoster } from "@/components/movie/movie-poster";
 
 export default function ShowCard({ movie, shows, user }: { movie: Movie; shows: Show[]; user: ClientSessionUser }) {
   const router = useRouter();
   if (!user) return null;
 
   return (
-    <article className="bg-[#18181b] border border-white/[0.07] rounded-[14px] overflow-hidden cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] flex flex-col hover:-translate-y-1.5 hover:scale-[1.03]">
-      <div className="h-56 border relative">
-        {movie.img && (
-          <Image src={movie.img} width={400} height={500} alt={"movie-image"} className="w-full h-full object-cover" />
-        )}
-        <div className="absolute top-2.5 left-2.5 flex items-center gap-1 bg-black/65 backdrop-blur-sm border border-white/12 rounded-lg py-1 px-2 text-[0.8125rem] font-semibold text-[#fbbf24]">
-          <Star className="w-2.75 h-2.75 fill-[#fbbf24] stroke-none" />
+    <article className="flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30">
+      <div className="relative h-56">
+        <MoviePoster src={movie.img} alt={movie.title} title={movie.title} width={400} height={500} />
+        <div className="absolute top-2.5 left-2.5 flex items-center gap-1 rounded-lg border border-gold/30 bg-background/70 px-2 py-1 text-[0.8125rem] font-semibold text-gold backdrop-blur-sm">
+          <Star className="h-2.75 w-2.75 fill-gold stroke-none" />
           <span>{movie.vote_average.toFixed(1) ?? "—"}</span>
         </div>
       </div>
 
       {/* Card body */}
       <div className="p-4 flex flex-col gap-2 flex-1">
-        <h3 className="[font-family:var(--display,'Fraunces',serif)] text-base font-semibold text-[#fafafa] leading-[1.3] m-0 line-clamp-2">
+        <h3 className="font-display m-0 line-clamp-2 text-base leading-[1.3] font-semibold">
           {movie.title}
         </h3>
 
         <div className="flex flex-wrap gap-1.5">
-          <span className="text-[0.6875rem] font-medium text-white/50 bg-white/6 border border-white/8 rounded py-0.5 px-1.5 tracking-[0.03em]">
+          <span className="rounded-md border border-border bg-muted/60 px-1.5 py-0.5 text-[0.6875rem] font-medium tracking-[0.03em] text-muted-foreground">
             {new Date(movie.release_date).getFullYear()}
           </span>
-          <span className="text-[0.6875rem] font-medium text-white/50 bg-white/6 border border-white/8 rounded py-0.5 px-1.5 tracking-[0.03em]">
+          <span className="rounded-md border border-border bg-muted/60 px-1.5 py-0.5 text-[0.6875rem] font-medium tracking-[0.03em] text-muted-foreground">
             {movie.original_language.toUpperCase()}
           </span>
         </div>
 
-        <p className="text-[0.8125rem] text-white/38 leading-normal m-0 line-clamp-2 flex-1">
+        <p className="m-0 flex-1 line-clamp-2 text-[0.8125rem] leading-normal text-muted-foreground">
           {movie.overview || "No overview available."}
         </p>
 
@@ -53,7 +49,7 @@ export default function ShowCard({ movie, shows, user }: { movie: Movie; shows: 
                   e.stopPropagation();
                   router.push(`/shows/${show.id}` as Route);
                 }}
-                className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500 hover:text-white"
+                className="rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 text-sm font-medium text-primary transition hover:bg-primary hover:text-primary-foreground"
               >
                 <span className="mr-1">{format(new Date(show.startTime), "MMMM dd, yyyy")}</span>
                 <span className="mr-1">—</span>
@@ -73,12 +69,12 @@ export default function ShowCard({ movie, shows, user }: { movie: Movie; shows: 
 
 export function ShowCardSkeleton() {
   return (
-    <div className="bg-[#18181b] border border-white/[0.07] rounded-[14px] overflow-hidden">
-      <div className="h-70 bg-[linear-gradient(90deg,#27272a_25%,#3f3f46_50%,#27272a_75%)] bg-size-[200%_100%] animate-[shimmer_1.5s_infinite]" />
+    <div className="overflow-hidden rounded-2xl border border-border bg-card">
+      <div className="skeleton-shimmer h-56" />
       <div className="p-4 flex flex-col gap-2.5">
-        <div className="h-3 w-[80%] rounded-md bg-[linear-gradient(90deg,#27272a_25%,#3f3f46_50%,#27272a_75%)] bg-size-[200%_100%] animate-[shimmer_1.5s_infinite]" />
-        <div className="h-3 w-[55%] rounded-md bg-[linear-gradient(90deg,#27272a_25%,#3f3f46_50%,#27272a_75%)] bg-size-[200%_100%] animate-[shimmer_1.5s_infinite]" />
-        <div className="h-3 w-[40%] rounded-md bg-[linear-gradient(90deg,#27272a_25%,#3f3f46_50%,#27272a_75%)] bg-size-[200%_100%] animate-[shimmer_1.5s_infinite]" />
+        <div className="skeleton-shimmer h-3 w-[80%] rounded-md" />
+        <div className="skeleton-shimmer h-3 w-[55%] rounded-md" />
+        <div className="skeleton-shimmer h-3 w-[40%] rounded-md" />
       </div>
     </div>
   );

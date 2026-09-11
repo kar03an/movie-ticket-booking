@@ -58,8 +58,8 @@ export default function AddMovieToTheatrePage() {
 
   if (movieQuery.isPending || theatreQuery.isPending) {
     return (
-      <div className="grid pt-72 place-items-center bg-[#09090b] text-sm text-zinc-500">
-        <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+      <div className="grid pt-72 place-items-center bg-background text-sm text-muted-foreground">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -73,17 +73,16 @@ export default function AddMovieToTheatrePage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#09090b] pb-28 text-[#fafafa] [font-family:var(--body,'Archivo',sans-serif)]">
-      <div className="absolute -z-10 inset-0 bg-[linear-gradient(160deg,#18181b_0%,#09090b_60%,#0a0a12_100%)]" />
-      <div className="absolute -z-10 -top-30 left-1/2 -translate-x-1/2 w-175 h-100 bg-[radial-gradient(ellipse,rgba(220,38,38,0.16)_0%,transparent_70%)] pointer-events-none" />
+    <div className="relative overflow-hidden bg-background pb-28 text-foreground">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-primary/8 via-transparent to-transparent" />
 
-      <div className="border-b border-zinc-800/80 px-4 py-8">
+      <div className="border-b border-border px-4 py-8">
         <div className="mx-auto max-w-2xl">
-          <span className="text-[11px] font-medium uppercase tracking-[0.3em] text-red-500/80">
+          <span className="text-[11px] font-medium uppercase tracking-[0.3em] text-primary/80">
             Add to {theatre?.title ?? "theatre"}
           </span>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-50">Schedule a showtime</h1>
-          <p className="mt-1 text-sm text-zinc-500">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground">Schedule a showtime</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             Set the date, time and price, then choose which seats are open for this show.
           </p>
         </div>
@@ -94,17 +93,17 @@ export default function AddMovieToTheatrePage() {
 
         <div className="mt-8 max-w-2xl">
           <div className="flex items-center justify-center gap-3">
-            <h2 className="text-sm mb-2 font-semibold uppercase tracking-wide text-zinc-300">{"Showtime details"}</h2>
+            <h2 className="text-sm mb-2 font-semibold uppercase tracking-wide text-foreground/90">{"Showtime details"}</h2>
           </div>
           <ShowtimeForm value={showtime} onChange={setShowtime} />
         </div>
 
         <div className="mt-10 w-full">
           {theatreSeatsLayout.isPending && (
-            <p className="mt-4 text-center text-sm text-zinc-500">Loading seat layout…</p>
+            <p className="mt-4 text-center text-sm text-muted-foreground">Loading seat layout…</p>
           )}
           {theatreSeatsLayout.isError && (
-            <p className="mt-4 text-center text-sm text-red-400">
+            <p className="mt-4 text-center text-sm text-primary">
               Couldn't load the seat layout. {theatreSeatsLayout.error.message}
             </p>
           )}
@@ -112,16 +111,16 @@ export default function AddMovieToTheatrePage() {
         </div>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-zinc-800 bg-[#0a0a0c]/90 backdrop-blur supports-backdrop-blur:bg-[#0a0a0c]/70">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-4 py-3">
-          <span className="text-sm text-zinc-400">
+          <span className="text-sm text-muted-foreground">
             {seats.length} seat{seats.length === 1 ? "" : "s"} available
           </span>
           <button
             type="button"
             disabled={!isFormValid || addShowtimeMutation.isPending}
             onClick={() => addShowtimeMutation.mutate()}
-            className="rounded-md hover:cursor-pointer bg-red-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-md bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground hover:cursor-pointer hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {addShowtimeMutation.isPending ? "Adding…" : "Add Show"}
           </button>

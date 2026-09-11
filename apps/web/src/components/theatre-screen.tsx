@@ -12,12 +12,12 @@ export default function TheatreScreen() {
         <defs>
           <linearGradient id="screenGradient" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="transparent" />
-            <stop offset="50%" stopColor="#dc2626" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="var(--gold)" stopOpacity="0.9" />
             <stop offset="100%" stopColor="transparent" />
           </linearGradient>
         </defs>
       </svg>
-      <span className="text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">screen</span>
+      <span className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">screen</span>
     </div>
   );
 }

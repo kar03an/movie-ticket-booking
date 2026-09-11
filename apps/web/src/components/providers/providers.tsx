@@ -13,10 +13,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
-          scriptProps={{ type: 'application/json' }}
+          scriptProps={{ type: "application/json" }}
         >
           {children}
           <Toaster richColors />

@@ -15,7 +15,6 @@ import {
   MapPin,
   Tag,
 } from "lucide-react";
-import Link from "next/link";
 import type { Route } from "next";
 
 type Role = "CUSTOMER" | "OWNER";
@@ -23,24 +22,24 @@ type Role = "CUSTOMER" | "OWNER";
 function RolePicker({ onSelect }: { onSelect: (role: Role) => void }) {
   return (
     <div className="space-y-4">
-      <p className="text-sm text-zinc-400 text-center mb-6">
+      <p className="text-sm text-muted-foreground text-center mb-6">
         How are you planning to use Mtb?
       </p>
 
       <button
         type="button"
         onClick={() => onSelect("CUSTOMER")}
-        className="group hover:cursor-pointer w-full flex items-start gap-4 rounded-2xl border border-zinc-700 bg-zinc-800/50 p-5 text-left transition-all hover:border-red-500/50 hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-red-500/30"
+        className="group hover:cursor-pointer w-full flex items-start gap-4 rounded-2xl border border-border bg-secondary/50 p-5 text-left transition-all hover:border-primary/50 hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/30"
       >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-600/15 text-red-400 group-hover:bg-red-600/25 transition-colors">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary group-hover:bg-primary/25 transition-colors">
           <User className="h-5 w-5" />
         </span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <p className="font-semibold text-zinc-100">Browse Movies</p>
-            <ChevronRight className="h-4 w-4 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
+            <p className="font-semibold text-foreground">Browse Movies</p>
+            <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-muted-foreground transition-colors" />
           </div>
-          <p className="mt-0.5 text-sm text-zinc-500">
+          <p className="mt-0.5 text-sm text-muted-foreground">
             Browse movies, book seats, and manage your tickets.
           </p>
         </div>
@@ -49,17 +48,17 @@ function RolePicker({ onSelect }: { onSelect: (role: Role) => void }) {
       <button
         type="button"
         onClick={() => onSelect("OWNER")}
-        className="group hover:cursor-pointer w-full flex items-start gap-4 rounded-2xl border border-zinc-700 bg-zinc-800/50 p-5 text-left transition-all hover:border-red-500/50 hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-red-500/30"
+        className="group hover:cursor-pointer w-full flex items-start gap-4 rounded-2xl border border-border bg-secondary/50 p-5 text-left transition-all hover:border-primary/50 hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/30"
       >
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-600/15 text-orange-400 group-hover:bg-orange-600/25 transition-colors">
           <Building2 className="h-5 w-5" />
         </span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <p className="font-semibold text-zinc-100">Owner</p>
-            <ChevronRight className="h-4 w-4 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
+            <p className="font-semibold text-foreground">Owner</p>
+            <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-muted-foreground transition-colors" />
           </div>
-          <p className="mt-0.5 text-sm text-zinc-500">
+          <p className="mt-0.5 text-sm text-muted-foreground">
             List your theatre, manage shows, and sell tickets to your audience.
           </p>
         </div>
@@ -87,19 +86,19 @@ function CustomerForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <p className="text-sm text-zinc-400 text-center">
+      <p className="text-sm text-muted-foreground text-center">
         Just your name to get started — you can update it any time.
       </p>
 
       <div className="space-y-1.5">
         <label
           htmlFor="customer-name"
-          className="text-xs font-medium uppercase tracking-wide text-zinc-500"
+          className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
         >
           Display Name
         </label>
         <div className="relative">
-          <Tag className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+          <Tag className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             id="customer-name"
             type="text"
@@ -108,7 +107,7 @@ function CustomerForm({
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ada Lovelace"
-            className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 py-3 pl-10 pr-4 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+            className="field-input pl-10"
           />
         </div>
       </div>
@@ -117,14 +116,14 @@ function CustomerForm({
         <button
           type="button"
           onClick={onBack}
-          className="rounded-xl border border-zinc-700 bg-transparent px-5 py-3 text-sm font-semibold text-zinc-400 transition hover:border-zinc-600 hover:text-zinc-200"
+          className="rounded-xl border border-border bg-transparent px-5 py-3 text-sm font-semibold text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
         >
           Back
         </button>
         <button
           type="submit"
           disabled={isSubmitting || !name.trim()}
-          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/40 transition-all hover:bg-red-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400 disabled:shadow-none"
+          className="btn-cinema flex-1"
         >
           {isSubmitting ? (
             <>
@@ -173,14 +172,14 @@ function BusinessForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <p className="text-sm text-zinc-400 text-center">
+      <p className="text-sm text-muted-foreground text-center">
         Tell us about your theatre so customers can find you.
       </p>
 
       <div className="space-y-1.5">
         <label
           htmlFor="theatre-title"
-          className="text-xs font-medium uppercase tracking-wide text-zinc-500"
+          className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
         >
           Theatre Name
         </label>
@@ -192,19 +191,19 @@ function BusinessForm({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Cineplex Downtown"
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+          className="field-input"
         />
       </div>
 
       <div className="space-y-1.5">
         <label
           htmlFor="theatre-address"
-          className="text-xs font-medium uppercase tracking-wide text-zinc-500"
+          className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
         >
           Street Address
         </label>
         <div className="relative">
-          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             id="theatre-address"
             type="text"
@@ -212,7 +211,7 @@ function BusinessForm({
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="12 Cinema Lane"
-            className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 py-3 pl-10 pr-4 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+            className="field-input pl-10"
           />
         </div>
       </div>
@@ -221,7 +220,7 @@ function BusinessForm({
         <div className="space-y-1.5">
           <label
             htmlFor="theatre-city"
-            className="text-xs font-medium uppercase tracking-wide text-zinc-500"
+            className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
           >
             City
           </label>
@@ -232,13 +231,13 @@ function BusinessForm({
             value={city}
             onChange={(e) => setCity(e.target.value)}
             placeholder="Mumbai"
-            className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+            className="field-input"
           />
         </div>
         <div className="space-y-1.5">
           <label
             htmlFor="theatre-country"
-            className="text-xs font-medium uppercase tracking-wide text-zinc-500"
+            className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
           >
             Country
           </label>
@@ -249,7 +248,7 @@ function BusinessForm({
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             placeholder="India"
-            className="w-full rounded-xl border border-zinc-700 bg-zinc-800/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition focus:border-red-500/60 focus:ring-2 focus:ring-red-500/15"
+            className="field-input"
           />
         </div>
       </div>
@@ -258,7 +257,7 @@ function BusinessForm({
         <button
           type="button"
           onClick={onBack}
-          className="rounded-xl border border-zinc-700 bg-transparent px-5 py-3 text-sm font-semibold text-zinc-400 transition hover:border-zinc-600 hover:text-zinc-200"
+          className="rounded-xl border border-border bg-transparent px-5 py-3 text-sm font-semibold text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
         >
           Back
         </button>
@@ -271,7 +270,7 @@ function BusinessForm({
             !city.trim() ||
             !country.trim()
           }
-          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/40 transition-all hover:bg-red-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400 disabled:shadow-none"
+          className="btn-cinema flex-1"
         >
           {isSubmitting ? (
             <>
@@ -295,8 +294,8 @@ function OnboardingSuccess({ role }: { role: Role }) {
         <CheckCircle2 className="h-8 w-8 text-emerald-400" />
       </div>
       <div>
-        <h2 className="text-xl font-bold text-zinc-100">You're all set!</h2>
-        <p className="mt-1 text-sm text-zinc-400">
+        <h2 className="text-xl font-bold text-foreground">You're all set!</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           {role === "CUSTOMER"
             ? "Your account is ready. Start exploring movies near you."
             : "Your theatre profile is live. Start adding movies and showtimes."}
@@ -305,7 +304,7 @@ function OnboardingSuccess({ role }: { role: Role }) {
       <button
         type="button"
         onClick={() => router.push("/movies" as Route)}
-        className="mt-2 flex items-center gap-2 rounded-xl bg-red-600 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/40 transition-all hover:bg-red-500 active:scale-[0.98]"
+        className="btn-cinema mt-2"
       >
         <Film className="h-4 w-4" />
         {role === "CUSTOMER" ? "Browse Movies" : "Go to Dashboard"}
@@ -322,10 +321,10 @@ function ProgressDots({ step, total }: { step: number; total: number }) {
           key={i}
           className={`h-1.5 rounded-full transition-all ${
             i < step
-              ? "w-6 bg-red-500"
+              ? "w-6 bg-primary"
               : i === step
-                ? "w-4 bg-zinc-400"
-                : "w-1.5 bg-zinc-700"
+                ? "w-4 bg-gold"
+                : "w-1.5 bg-muted"
           }`}
         />
       ))}
@@ -343,8 +342,8 @@ export default function OnboardingPage() {
 
   if (sessionPending) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -402,26 +401,12 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center px-4 py-12">
-      {/* Background glow */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-150 h-100 rounded-full bg-red-600/10 blur-3xl" />
-      </div>
-
-      {/* Logo */}
-      <Link href="/" className="mb-8 flex items-center gap-2 group">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-600/15 text-red-400 group-hover:bg-red-600/25 transition-colors">
-          <Film className="h-5 w-5" />
-        </span>
-        <span className="font-fraunces text-xl font-semibold tracking-tight">
-          Reel<span className="text-red-500">.</span>
-        </span>
-      </Link>
+    <div className="relative flex flex-col items-center justify-center px-4 py-12">
 
       {/* Card */}
-      <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl overflow-hidden">
+      <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-2xl overflow-hidden">
         {/* Top accent */}
-        <div className="h-1 bg-linear-to-r from-red-700 via-red-500 to-orange-400" />
+        <div className="h-1 bg-linear-to-r from-burgundy via-primary to-gold" />
 
         <div className="px-8 py-8">
           {/* Progress */}
@@ -429,10 +414,10 @@ export default function OnboardingPage() {
 
           {/* Heading */}
           <div className="mb-6 text-center">
-            <p className="text-xs uppercase tracking-widest text-zinc-500 font-medium mb-1">
+            <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-1">
               Step {stepIndex + 1} of 3
             </p>
-            <h1 className="text-2xl font-bold text-zinc-100">{titles[step]}</h1>
+            <h1 className="text-2xl font-bold text-foreground">{titles[step]}</h1>
           </div>
 
           {/* Step content */}

@@ -1,37 +1,58 @@
 "use client";
 
 import Link from "next/link";
-import UserMenu from "./user-menu";
-import type { ReactNode } from "react";
+import type { Route } from "next";
+import { usePathname } from "next/navigation";
+import BrandMark from "@/components/brand/brand-mark";
+import UserMenu from "@/components/user-menu";
+import { ModeToggle } from "@/components/movie/mode-toggle";
+import { cn } from "@/lib/utils";
+import { authClient } from "@/lib/auth-client";
 
-export default function HeaderBar({ children }: { children: ReactNode }) {
+const publicLinks = [{ href: "/movies", label: "Now Showing" }] as const;
+
+export default function HeaderBar() {
+  const pathname = usePathname();
+  const { data: session } = authClient.useSession();
+  const role = session?.user?.role;
+  const ownerLinks =
+    role === "OWNER" || role === "ADMIN"
+      ? [
+          { href: "/dashboard/movies", label: "Console" },
+          { href: "/dashboard/shows", label: "Shows" },
+        ]
+      : [];
+
+  const links = [...publicLinks, ...ownerLinks];
+
   return (
-    <>
-      <div className="w-full flex justify-center items-center sm:px-6 px-2 border-b border-white/6">
-        <div className="flex max-w-7xl w-full flex-wrap sm:flex-nowrap items-center gap-4 sm:gap-10 py-5">
-          <Link
-            href="/"
-            className="[font-family:var(--display,'Fraunces',serif)] text-2xl font-semibold text-[#fafafa] no-underline tracking-[-0.02em] whitespace-nowrap"
-          >
-            Mtb<span className="text-[#dc2626]">.</span>
-          </Link>
-          <nav className="flex gap-0 sm:gap-1">
-            {/* <a className="px-2.5 sm:px-3.5 py-[0.4rem] rounded-full text-[0.8125rem] sm:text-sm cursor-pointer transition-colors duration-150 no-underline text-[#fafafa] bg-[#dc2626]/15">
-            Now Showing
-          </a> */}
-            {/* <a className="px-2.5 sm:px-3.5 py-[0.4rem] rounded-full text-[0.8125rem] sm:text-sm text-white/55 cursor-pointer transition-colors duration-150 no-underline hover:text-white/90 hover:bg-white/6">
-            Coming Soon
-          </a> */}
-            {/* <a className="px-2.5 sm:px-3.5 py-[0.4rem] rounded-full text-[0.8125rem] sm:text-sm text-white/55 cursor-pointer transition-colors duration-150 no-underline hover:text-white/90 hover:bg-white/[0.06]">
-            Events
-          </a> */}
-          </nav>
-          <div style={{ marginLeft: "auto" }}>
-            <UserMenu />
-          </div>
+    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/80 backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-7xl items-center gap-4 px-4 py-3.5 sm:px-6">
+        <BrandMark />
+        <nav className="hidden items-center gap-1 md:flex">
+          {links.map((link) => {
+            const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            return (
+              <Link
+                key={link.href}
+                href={link.href as Route}
+                className={cn(
+                  "rounded-full px-3.5 py-1.5 text-sm transition",
+                  active
+                    ? "bg-primary/15 font-medium text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="ml-auto flex items-center gap-2">
+          <ModeToggle />
+          <UserMenu />
         </div>
       </div>
-      {children}
-    </>
-  )
+    </header>
+  );
 }

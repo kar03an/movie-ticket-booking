@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useMovieWithTimings, type DatesWithTheatreTimings } from "./query";
 import { formatDatePillParts, formatTime } from "@/lib/utils";
 import type { Movie } from "@movie-ticket-booking/shared/types";
+import { MoviePoster, MoviePosterBackdrop } from "@/components/movie/movie-poster";
 
 export default function MoviePage() {
   const params = useParams<{ movieId: string }>();
@@ -70,9 +71,9 @@ export default function MoviePage() {
     return (
       <div className="container py-20 mx-auto px-6">
         <div className="mx-auto max-w-5xl animate-pulse space-y-4">
-          <div className="h-12 w-64 rounded bg-zinc-800" />
-          <div className="h-6 w-32 rounded bg-zinc-800" />
-          <div className="h-32 rounded bg-zinc-800" />
+          <div className="h-12 w-64 rounded bg-muted" />
+          <div className="h-6 w-32 rounded bg-muted" />
+          <div className="h-32 rounded bg-muted" />
         </div>
       </div>
     );
@@ -81,83 +82,64 @@ export default function MoviePage() {
   if (fetchMovieQuery.isError || !movie) {
     return (
       <div className="container py-20 text-center mx-auto px-6">
-        <h2 className="text-2xl font-semibold text-zinc-400">Movie not found</h2>
+        <h2 className="font-display text-2xl font-semibold text-muted-foreground">Movie not found</h2>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-white/5 py-12 md:py-20">
+    <div>
+      <section className="relative overflow-hidden border-b border-border py-12 md:py-20">
         {/* Blurred Backdrop Poster */}
-        {movie.img && (
-          <div className="absolute inset-0 select-none pointer-events-none">
-            <img
-              src={movie.img}
-              alt=""
-              className="h-full w-full object-cover opacity-15 blur-3xl scale-110"
-              aria-hidden="true"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-transparent" />
-          </div>
-        )}
-        <div className="absolute left-1/2 top-0 h-125 w-125 -translate-x-1/2 rounded-full bg-red-600/10 blur-3xl pointer-events-none" />
+        <MoviePosterBackdrop src={movie.img} />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-125 w-125 -translate-x-1/2 rounded-full bg-primary/12 blur-3xl" />
 
         <div className="relative container mx-auto px-6">
           <div className="flex flex-col gap-8 md:flex-row md:items-end relative z-10">
-            <div className="relative aspect-[2/3] w-full max-w-[280px] self-center md:self-auto overflow-hidden rounded-xl border border-white/10 bg-zinc-900 shadow-2xl shrink-0">
-              {movie.img ? (
-                <img
-                  src={movie.img}
-                  alt={movie.title}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center text-zinc-600">Poster</div>
-              )}
+            <div className="relative aspect-[2/3] w-full max-w-[280px] shrink-0 self-center overflow-hidden rounded-xl border border-border bg-card shadow-2xl md:self-auto">
+              <MoviePoster src={movie.img} alt={movie.title} title={movie.title} width={560} height={840} />
             </div>
 
             <div className="flex-1">
               <div className="mb-4 flex flex-wrap items-center gap-3">
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-3.5 py-1.5 text-xs font-semibold text-yellow-400">
-                  <Star className="h-4 w-4 fill-yellow-400 stroke-none" />
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold">
+                  <Star className="h-4 w-4 fill-gold stroke-none" />
                   {movie.vote_average > 0 ? movie.vote_average.toFixed(1) : "N/A"}/10
                 </div>
 
                 {movie.release_date && (
-                  <span className="text-xs font-semibold text-zinc-400 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5">
+                  <span className="rounded-full border border-border bg-muted/50 px-3.5 py-1.5 text-xs font-semibold text-muted-foreground">
                     {new Date(movie.release_date).getFullYear()}
                   </span>
                 )}
 
                 {movie.original_language && (
-                  <span className="text-xs font-semibold text-zinc-400 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 uppercase">
+                  <span className="rounded-full border border-border bg-muted/50 px-3.5 py-1.5 text-xs font-semibold text-muted-foreground uppercase">
                     {movie.original_language}
                   </span>
                 )}
 
                 {genresList.map((genre) => (
-                  <span key={genre} className="text-xs font-semibold text-red-400 bg-red-500/10 border border-red-500/20 rounded-full px-3.5 py-1.5">
+                  <span key={genre} className="rounded-full border border-primary/25 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold text-primary">
                     {genre}
                   </span>
                 ))}
               </div>
 
-              <h1 className="mb-4 text-4xl font-extrabold tracking-tight md:text-6xl text-white [font-family:var(--display,'Fraunces',serif)]">
+              <h1 className="font-display mb-4 text-4xl font-semibold tracking-tight md:text-6xl">
                 {movie.title}
               </h1>
 
               {movie.tagline && (
-                <p className="mb-4 text-lg italic text-zinc-400 font-medium">{movie.tagline}</p>
+                <p className="mb-4 text-lg font-medium text-muted-foreground italic">{movie.tagline}</p>
               )}
 
-              <p className="mb-8 text-base leading-relaxed text-zinc-300 max-w-2xl">{movie.overview}</p>
+              <p className="mb-8 max-w-2xl text-base leading-relaxed text-muted-foreground">{movie.overview}</p>
 
               <div className="flex flex-wrap gap-4">
                 <button
                   onClick={() => document.getElementById("showtimes")?.scrollIntoView({ behavior: "smooth" })}
-                  className="rounded-lg bg-red-600 px-8 py-4 font-semibold text-white transition hover:bg-red-700 active:scale-95 duration-150 cursor-pointer shadow-lg shadow-red-600/30"
+                  className="btn-cinema cursor-pointer px-8 py-4"
                 >
                   Book Tickets
                 </button>
@@ -165,7 +147,7 @@ export default function MoviePage() {
                   href={`https://www.youtube.com/results?search_query=${encodeURIComponent(movie.title + " official trailer")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-white/10 bg-white/5 px-8 py-4 font-semibold text-white backdrop-blur hover:bg-white/10 active:scale-95 duration-150 transition cursor-pointer"
+                  className="btn-cinema-ghost cursor-pointer px-8 py-4"
                 >
                   Watch Trailer
                 </a>
@@ -179,17 +161,17 @@ export default function MoviePage() {
       <section className="container mx-auto px-6 py-12">
         <div className="grid gap-8 lg:grid-cols-3">
           <div id="showtimes" className="mt-0 lg:col-span-3 scroll-mt-24">
-            <h2 className="mb-6 text-3xl font-bold tracking-tight text-white">Showtimes</h2>
+            <h2 className="font-display mb-6 text-3xl font-semibold tracking-tight">Showtimes</h2>
 
             {dateGroupKeys.length === 0 ? (
-              <div className="rounded-xl border border-white/10 bg-zinc-900/50 p-8 text-center text-zinc-500">
+              <div className="rounded-xl border border-border bg-card/60 p-8 text-center text-muted-foreground">
                 No showtimes scheduled yet — check back soon.
               </div>
             ) : (
               <div>
                 {/* ── Date carousel ── */}
                 <div className="mb-8 flex items-center gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
-                  <div className="flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-zinc-500 mr-2">
+                  <div className="mr-2 flex shrink-0 items-center gap-1.5 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
                     <CalendarDays className="h-4 w-4" />
                     Select Date
                   </div>
@@ -205,8 +187,8 @@ export default function MoviePage() {
                         onClick={() => setSelectedDateKey(dateKey)}
                         className={`flex shrink-0 flex-col items-center rounded-xl border px-5 py-3 transition duration-200 cursor-pointer min-w-[70px] ${
                           isActive
-                            ? "border-red-600 bg-red-600 text-white shadow-lg shadow-red-600/30"
-                            : "border-white/10 bg-white/5 text-zinc-300 hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
+                            ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/30"
+                            : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:bg-primary/10 hover:text-primary"
                         }`}
                       >
                         <span className="text-[10px] font-bold uppercase tracking-wider opacity-75">{day}</span>
@@ -219,7 +201,7 @@ export default function MoviePage() {
 
                 {/* ── Theatres for the selected date ── */}
                 {sortedTheatreEntries.length === 0 ? (
-                  <div className="rounded-xl border border-white/10 bg-zinc-900/50 p-8 text-center text-zinc-500">
+                  <div className="rounded-xl border border-border bg-card/60 p-8 text-center text-muted-foreground">
                     No theatres showing this movie on the selected date.
                   </div>
                 ) : (
@@ -227,12 +209,12 @@ export default function MoviePage() {
                     {sortedTheatreEntries.map(([theatreId, { theatreData, dates }]) => (
                       <div
                         key={theatreId}
-                        className="w-full flex md:flex-row flex-col justify-between gap-6 rounded-2xl border border-white/5 bg-zinc-900/40 p-6 backdrop-blur-md transition-all duration-300 hover:border-white/10 hover:bg-zinc-900/60"
+                        className="flex w-full flex-col justify-between gap-6 rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-md transition-all duration-300 hover:border-primary/25 md:flex-row"
                       >
                         <div className="flex-1">
-                          <h3 className="text-xl font-bold text-white mb-2">{theatreData.title}</h3>
-                          <p className="flex items-center gap-2 text-sm text-zinc-400">
-                            <MapPin className="h-4 w-4 text-red-500 shrink-0" />
+                          <h3 className="mb-2 font-display text-xl font-semibold">{theatreData.title}</h3>
+                          <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <MapPin className="h-4 w-4 shrink-0 text-primary" />
                             {theatreData.address}, {theatreData.city}, {theatreData.country}
                           </p>
                         </div>
@@ -252,7 +234,7 @@ export default function MoviePage() {
                                     router.push(`/movies/${params.movieId}/${slot.showId}`);
                                   }}
                                   title={hasId ? undefined : "This showtime is missing an id (backend data issue)"}
-                                  className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4.5 py-3 text-sm font-semibold text-zinc-100 transition duration-150 hover:border-red-500 hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-white/10 disabled:hover:bg-white/5 disabled:hover:text-inherit cursor-pointer"
+                                  className="flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-muted/40 px-4.5 py-3 text-sm font-semibold transition duration-150 hover:border-primary hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-muted/40 disabled:hover:text-inherit"
                                 >
                                   <Clock className="h-4 w-4 opacity-70" />
                                   {formatTime(slot.start)}

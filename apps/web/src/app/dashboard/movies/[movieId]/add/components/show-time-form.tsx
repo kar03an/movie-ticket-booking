@@ -24,7 +24,7 @@ export function ShowtimeForm({
           type="date"
           value={value.date}
           onChange={(e) => update("date", e.target.value)}
-          className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-red-500"
+          className="field-input"
         />
       </Field>
       <Field label="Time">
@@ -32,12 +32,12 @@ export function ShowtimeForm({
           type="time"
           value={value.time}
           onChange={(e) => update("time", e.target.value)}
-          className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-red-500"
+          className="field-input"
         />
       </Field>
       <Field label="Price">
         <div className="relative">
-          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-zinc-500 flex justify-center items-center">
+          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground flex justify-center items-center">
             ₹
           </span>
           <input
@@ -47,7 +47,7 @@ export function ShowtimeForm({
             value={value.price}
             onChange={(e) => update("price", e.target.value)}
             placeholder="0.00"
-            className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 py-2 pl-6 pr-3 text-sm text-zinc-100 outline-none focus:border-red-500"
+            className="w-full rounded-md border border-border bg-card/60 py-2 pl-6 pr-3 text-sm text-foreground outline-none focus:border-primary"
           />
         </div>
       </Field>
@@ -58,7 +58,7 @@ export function ShowtimeForm({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-1 flex-col gap-1.5">
-      <span className="text-xs font-medium uppercase tracking-wide text-zinc-500">{label}</span>
+      <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</span>
       {children}
     </label>
   );

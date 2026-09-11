@@ -11,6 +11,7 @@ import ErrorComponent from "@/components/error";
 import { useTheatre } from "@/hooks/query/useTheatre";
 import { useTheatreSeatsLayout } from "@/hooks/query/useTheatreSeatsLayout";
 import { useTheatreSeatsLayoutMtn } from "@/hooks/mutation/useTheatreSeatsLayoutMtn";
+import TheatreScreen from "@/components/theatre-screen";
 
 export type SeatStatus = "available" | "unavailable";
 export type SeatStatusMap = Map<string, SeatStatus>;
@@ -140,7 +141,7 @@ function ManageSeatsPage() {
 
   if (theatreQuery.isPending) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[#09090b] text-sm text-zinc-500">Loading theatre…</div>
+      <div className="grid min-h-screen place-items-center bg-background text-sm text-muted-foreground">Loading theatre…</div>
     );
   }
 
@@ -152,14 +153,13 @@ function ManageSeatsPage() {
   const totalRows = rows.length;
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#09090b] pb-28 text-[#fafafa] [font-family:var(--body,'Archivo',sans-serif)]">
-      <div className="absolute -z-10 inset-0 bg-[linear-gradient(160deg,#18181b_0%,#09090b_60%,#0a0a12_100%)]" />
-      <div className="absolute -z-10 -top-30 left-1/2 -translate-x-1/2 w-175 h-100 bg-[radial-gradient(ellipse,rgba(220,38,38,0.16)_0%,transparent_70%)] pointer-events-none" />
+    <div className="relative overflow-hidden bg-background pb-28 text-foreground">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-primary/8 via-transparent to-transparent" />
 
       <TheatreDetailsComponent theatre={theatreQuery.data} totalSeats={totalSeats} totalRows={totalRows} />
 
       <div className="w-full px-4 py-6">
-        <Screen />
+        <TheatreScreen />
 
         <div className="mt-8 flex flex-col items-center gap-4">
           <Legend />
@@ -167,9 +167,9 @@ function ManageSeatsPage() {
         </div>
 
         <div className="mt-6">
-          {seatsQuery.isPending && <p className="text-center text-sm text-zinc-500">Loading seats…</p>}
+          {seatsQuery.isPending && <p className="text-center text-sm text-muted-foreground">Loading seats…</p>}
           {seatsQuery.isError && (
-            <p className="text-center text-sm text-red-400">
+            <p className="text-center text-sm text-primary">
               Couldn't load the seat layout. {seatsQuery.error.message}
             </p>
           )}
@@ -180,14 +180,14 @@ function ManageSeatsPage() {
       </div>
 
       {isDirty && (
-        <div className="fixed inset-x-0 bottom-0 z-10 border-t border-zinc-800 bg-[#0a0a0c]/90 backdrop-blur supports-backdrop-blur:bg-[#0a0a0c]/70">
+        <div className="fixed inset-x-0 bottom-0 z-10 border-t border-border bg-background/90 backdrop-blur">
           <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-4 py-3">
-            <span className="text-sm text-zinc-400">Unsaved layout changes</span>
+            <span className="text-sm text-muted-foreground">Unsaved layout changes</span>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={discardChanges}
-                className="rounded-md px-3 py-1.5 text-sm text-zinc-400 hover:text-zinc-200"
+                className="rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground"
               >
                 Discard
               </button>
@@ -197,7 +197,7 @@ function ManageSeatsPage() {
                 onClick={() => {
                   updateSeatsMutation.mutate();
                 }}
-                className="rounded-md hover:cursor-pointer bg-red-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-500 disabled:opacity-50"
+                className="rounded-md bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground hover:cursor-pointer hover:brightness-110 disabled:opacity-50"
               >
                 {updateSeatsMutation.isPending ? "Saving…" : "Save layout"}
               </button>
@@ -219,19 +219,19 @@ function TheatreDetailsComponent({
   totalRows: number;
 }) {
   return (
-    <div className="border-b border-zinc-800/80 px-4 py-8">
+    <div className="border-b border-border px-4 py-8">
       <div className="mx-auto max-w-2xl">
-        <span className="text-[11px] font-medium uppercase tracking-[0.3em] text-red-500/80">Manage seats</span>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-50">{theatre.title}</h1>
-        {theatre.address && <p className="mt-1 text-sm text-zinc-500">{theatre.country}</p>}
+        <span className="text-[11px] font-medium uppercase tracking-[0.3em] text-primary/80">Manage seats</span>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground">{theatre.title}</h1>
+        {theatre.address && <p className="mt-1 text-sm text-muted-foreground">{theatre.country}</p>}
         <div className="mt-5 flex gap-6 text-sm">
           <div>
-            <span className="block text-lg font-semibold text-zinc-100">{totalRows}</span>
-            <span className="text-xs uppercase tracking-wide text-zinc-500">rows</span>
+            <span className="block text-lg font-semibold text-foreground">{totalRows}</span>
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">rows</span>
           </div>
           <div>
-            <span className="block text-lg font-semibold text-zinc-100">{totalSeats}</span>
-            <span className="text-xs uppercase tracking-wide text-zinc-500">available seats</span>
+            <span className="block text-lg font-semibold text-foreground">{totalSeats}</span>
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">available seats</span>
           </div>
         </div>
       </div>
@@ -239,37 +239,13 @@ function TheatreDetailsComponent({
   );
 }
 
-function Screen() {
-  return (
-    <div className="mx-auto flex max-w-2xl flex-col items-center gap-2">
-      <svg viewBox="0 0 600 60" className="h-10 w-full max-w-md" aria-hidden="true">
-        <path
-          d="M 10 10 Q 300 55 590 10"
-          fill="none"
-          stroke="url(#screenGradient)"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-        <defs>
-          <linearGradient id="screenGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="50%" stopColor="#dc2626" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <span className="text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">screen</span>
-    </div>
-  );
-}
-
 function Legend() {
   const items = [
-    { label: "Available", className: "border border-zinc-700" },
-    { label: "Unavailable", className: "border border-dashed border-zinc-700" },
+    { label: "Available", className: "border border-border" },
+    { label: "Unavailable", className: "border border-dashed border-border" },
   ];
   return (
-    <div className="flex items-center gap-5 text-xs text-zinc-400">
+    <div className="flex items-center gap-5 text-xs text-muted-foreground">
       {items.map(({ label, className }) => (
         <div key={label} className="flex items-center gap-2">
           <span className={cn("h-3.5 w-3.5 rounded-sm", className)} />
@@ -286,14 +262,14 @@ function Toolbar({ onAddRow, onAddColumn }: { onAddRow: () => void; onAddColumn:
       <button
         type="button"
         onClick={onAddRow}
-        className="rounded-md hover:cursor-pointer border border-zinc-700 px-3 py-1.5 text-xs font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white"
+        className="rounded-md hover:cursor-pointer border border-border px-3 py-1.5 text-xs font-medium text-foreground/90 transition-colors hover:border-primary/40 hover:text-white"
       >
         + Add row
       </button>
       <button
         type="button"
         onClick={onAddColumn}
-        className="rounded-md hover:cursor-pointer border border-zinc-700 px-3 py-1.5 text-xs font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white"
+        className="rounded-md hover:cursor-pointer border border-border px-3 py-1.5 text-xs font-medium text-foreground/90 transition-colors hover:border-primary/40 hover:text-white"
       >
         + Add column
       </button>
@@ -315,8 +291,8 @@ function SeatsComponent({
   if (rows.length === 0 || maxCols === 0) {
     return (
       <div className="mx-auto max-w-sm py-16 text-center">
-        <p className="text-sm font-medium text-zinc-300">No layout yet</p>
-        <p className="mt-1 text-sm text-zinc-500">Add a row and a column above to start building the seat map.</p>
+        <p className="text-sm font-medium text-foreground/90">No layout yet</p>
+        <p className="mt-1 text-sm text-muted-foreground">Add a row and a column above to start building the seat map.</p>
       </div>
     );
   }
@@ -325,7 +301,7 @@ function SeatsComponent({
     <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-2.5 pt-4 pb-8">
       {rows.map((row) => (
         <div key={row} className="flex w-full items-center justify-center gap-3">
-          <span className="w-4 shrink-0 text-center text-xs font-semibold text-zinc-500">{row}</span>
+          <span className="w-4 shrink-0 text-center text-xs font-semibold text-muted-foreground">{row}</span>
           <div className="flex flex-wrap justify-center gap-2">
             {Array.from({ length: maxCols }).map((_, idx) => {
               const col = idx + 1;
@@ -344,10 +320,10 @@ function SeatsComponent({
                   onClick={() => onToggle(row, col)}
                   className={cn(
                     "flex h-8 w-8 items-center justify-center rounded-md text-[10px] font-medium tracking-widest transition-colors duration-150 ease-in hover:cursor-pointer",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
                     isAvailable
-                      ? "border border-zinc-700 text-zinc-300 hover:border-red-500 hover:text-red-400"
-                      : "border border-dashed border-zinc-800 text-zinc-700 hover:border-zinc-600 hover:text-zinc-500",
+                      ? "border border-border text-foreground/90 hover:border-primary hover:text-primary"
+                      : "border border-dashed border-border text-muted-foreground hover:border-primary/40 hover:text-muted-foreground",
                   )}
                 >
                   {col >= 10 ? String(col) : "0" + String(col)}

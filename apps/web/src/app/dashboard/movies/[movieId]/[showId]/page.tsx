@@ -128,13 +128,13 @@ interface ProceedBarProps {
 
 function ProceedBar({ isProceeding, selectedSeat, onProceed }: ProceedBarProps) {
   return (
-    <div className="fixed inset-x-0 bottom-0 border-t border-zinc-800 bg-zinc-950/95 backdrop-blur-sm">
+    <div className="fixed inset-x-0 bottom-0 border-t border-border bg-background/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4">
         <div className="flex flex-col">
-          <span className="text-xs uppercase tracking-wide text-zinc-500">
+          <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {selectedSeat ? "Selected seat" : "No seat selected"}
           </span>
-          <span className="text-sm font-medium text-zinc-100">
+          <span className="text-sm font-medium text-foreground">
             {selectedSeat
               ? `${selectedSeat.seat.row}${selectedSeat.seat.col} · ₹${selectedSeat.price}`
               : "Tap a seat to continue"}
@@ -144,7 +144,7 @@ function ProceedBar({ isProceeding, selectedSeat, onProceed }: ProceedBarProps) 
           type="button"
           disabled={!selectedSeat}
           onClick={onProceed}
-          className="rounded-lg bg-red-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-500"
+          className="rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:brightness-110 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
         >
           {isProceeding ? "Proceeding" : "Proceed to buy"}
         </button>
@@ -197,7 +197,7 @@ export default function ShowPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-[60vh] items-center justify-center text-sm text-zinc-500">
+      <div className="flex h-[60vh] items-center justify-center text-sm text-muted-foreground">
         Loading seats…
       </div>
     );
@@ -207,8 +207,8 @@ export default function ShowPage() {
     console.log("no seats: ", data, isError)
     return (
       <div className="flex h-[60vh] flex-col items-center justify-center gap-2 text-center">
-        <p className="text-sm font-medium text-zinc-300">Couldn't load seats for this show.</p>
-        <p className="text-xs text-zinc-500">Try refreshing the page.</p>
+        <p className="text-sm font-medium text-foreground/90">Couldn't load seats for this show.</p>
+        <p className="text-xs text-muted-foreground">Try refreshing the page.</p>
       </div>
     );
   }
@@ -216,7 +216,7 @@ export default function ShowPage() {
   const { theatreMovieSeatsData: seats, theatreData, showTime, movieTitle } = data;
 
   return (
-    <div className="min-h-screen bg-zinc-950 pb-28 pt-6">
+    <div className="min-h-screen bg-background pb-28 pt-6">
       {isBuying && selectedSeat && (
         <BuyTheatreMovieSeat
           selectedSeat={selectedSeat}
