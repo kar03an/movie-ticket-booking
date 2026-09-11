@@ -1,6 +1,6 @@
 # movie-ticket-booking
 
-A full-stack movie ticket booking platform supporting movie discovery Tmdb
+System designed a full-stack movie ticket booking platform supporting movie discovery Tmdb
 API integration, showtime scheduling, seat selection, and end-to-end booking-to-payment workflow across multiple
 theatres and shows.
 
