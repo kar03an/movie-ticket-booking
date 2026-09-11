@@ -48,6 +48,7 @@ export default function MoviesPage() {
               user={auth.user}
               onShowAll={clearFilters}
               preview
+              showAction={false}
             />
           </section>
         )}

@@ -24,10 +24,12 @@ export default function MovieCard({
   movie,
   user,
   preview = false,
+  showAction = true,
 }: {
   movie: TMDBMoviesType;
   user: ClientSessionUser;
   preview?: boolean;
+  showAction?: boolean;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -73,7 +75,7 @@ export default function MovieCard({
               {movieDateLabel(movie.release_date)}
             </span>
 
-            {!preview && user.role === "CUSTOMER" && (
+            {showAction && user.role === "CUSTOMER" && (
               <Link
                 href={`/movies/${movie.id}` as Route}
                 className="flex items-center gap-0.75 rounded-lg bg-primary px-3.5 py-1.5 text-[0.8125rem] font-semibold text-primary-foreground no-underline transition duration-150 hover:brightness-110"
@@ -83,7 +85,7 @@ export default function MovieCard({
                 <ChevronRight size={12} />
               </Link>
             )}
-            {!preview && user.role === "OWNER" && (
+            {showAction && user.role === "OWNER" && (
               <Link
                 href={`/dashboard/movies/${movie.id}/add` as Route}
                 className="flex items-center gap-0.75 rounded-lg bg-primary px-3.5 py-1.5 text-[0.8125rem] font-semibold text-primary-foreground no-underline transition duration-150 hover:brightness-110"

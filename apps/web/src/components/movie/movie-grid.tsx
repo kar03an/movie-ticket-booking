@@ -14,6 +14,7 @@ export function MovieGrid({
   user,
   onShowAll,
   preview = false,
+  showAction = true,
 }: {
   movies: TMDBMoviesType[];
   isPending: boolean;
@@ -22,6 +23,7 @@ export function MovieGrid({
   user: ClientSessionUser;
   onShowAll: () => void;
   preview?: boolean;
+  showAction?: boolean;
 }) {
   if (isPending) {
     return (
@@ -61,7 +63,7 @@ export function MovieGrid({
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-5 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))]">
       {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} user={user} preview={preview} />
+        <MovieCard key={movie.id} movie={movie} user={user} preview={preview} showAction={showAction} />
       ))}
     </div>
   );

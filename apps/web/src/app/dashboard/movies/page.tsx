@@ -34,6 +34,7 @@ export default function MoviesPage() {
           user={auth.user}
           onShowAll={clearFilters}
           preview={Boolean(search.trim())}
+          showAction
         />
       </main>
     </div>

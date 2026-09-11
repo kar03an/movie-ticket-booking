@@ -91,10 +91,7 @@ export default function AddMovieToTheatrePage() {
       <div className="mx-auto w-full flex justify-center items-center flex-col">
         <MovieSummary movie={movieQuery.data} />
 
-        <div className="mt-8 max-w-2xl">
-          <div className="flex items-center justify-center gap-3">
-            <h2 className="text-sm mb-2 font-semibold uppercase tracking-wide text-foreground/90">{"Showtime details"}</h2>
-          </div>
+        <div className="mx-auto mt-8 w-full max-w-2xl px-4">
           <ShowtimeForm value={showtime} onChange={setShowtime} />
         </div>
 
@@ -114,13 +111,15 @@ export default function AddMovieToTheatrePage() {
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-4 py-3">
           <span className="text-sm text-muted-foreground">
-            {seats.length} seat{seats.length === 1 ? "" : "s"} available
+            {showtime.date && showtime.time
+              ? `${seats.length} seat${seats.length === 1 ? "" : "s"} · ready to publish`
+              : `${seats.length} seat${seats.length === 1 ? "" : "s"} available`}
           </span>
           <button
             type="button"
             disabled={!isFormValid || addShowtimeMutation.isPending}
             onClick={() => addShowtimeMutation.mutate()}
-            className="rounded-md bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground hover:cursor-pointer hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+            className="btn-cinema px-5 py-2.5"
           >
             {addShowtimeMutation.isPending ? "Adding…" : "Add Show"}
           </button>
