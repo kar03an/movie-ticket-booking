@@ -12,11 +12,8 @@ export default function BrandMark({
   return (
     <Link
       href={href as Route}
-      className={cn("group inline-flex items-center gap-2 no-underline", className)}
+      className={cn("group inline-flex items-center no-underline", className)}
     >
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 font-display text-sm font-semibold text-primary">
-        M
-      </span>
       <span className="font-display text-xl font-semibold tracking-tight text-foreground">
         Mtb
         <span className="text-primary">.</span>
