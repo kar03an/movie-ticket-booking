@@ -6,18 +6,11 @@ theatres and shows.
 
 ## Screenshots
 
-**Check movie shows with theatre and timings**
-<img width="1920" height="1050" alt="book ticket" src="https://github.com/user-attachments/assets/df08a40b-6ec2-484d-b258-4df798a0947f" />
+<img width="1920" height="3020" alt="screencapture-mtb-kran-lol-movies-2026-09-11-08_50_23" src="https://github.com/user-attachments/assets/86aac98c-f2f6-4a3d-a0b8-031f77d6bbe7" />
 
-**Reserve and buy show seat**
-<img width="1920" height="1050" alt="reserve-seat" src="https://github.com/user-attachments/assets/4982cb43-fd19-42e2-bbb4-efbb414407c0" />
+<img width="1920" height="2000" alt="screencapture-mtb-kran-lol-dashboard-movies-cms3egjg5000004l2l7hm2giv-add-2026-09-11-08_53_39" src="https://github.com/user-attachments/assets/378f9d5f-ee66-48e6-b01d-451e407dd9cf" />
 
-
-**Manage your theatre's seat layout**
-<img width="1903" height="922" alt="manage-theatre-seat-layout" src="https://github.com/user-attachments/assets/2d4e6eff-2688-45a0-a96b-d5ebd3176469" />
-
-**Create movie shows for your theatre**
-<img width="1903" height="920" alt="create-show" src="https://github.com/user-attachments/assets/a52304f4-f731-47c2-b02d-44cba279fc87" />
+<img width="1920" height="1182" alt="screencapture-mtb-kran-lol-dashboard-seats-2026-09-11-08_52_53" src="https://github.com/user-attachments/assets/a6910c6d-f37b-4cf4-968b-62c8540bd65e" />
 
 
 ## Brainstorming
