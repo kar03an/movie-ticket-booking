@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { env } from "@movie-ticket-booking/env/web";
 import SelectTheatreMovieSeat from "@/components/select-seat-component";
-import BuyTheatreMovieSeat from "@/components/buy-seat-component";
+import BuyTheatreMovieSeat, { type TicketMovie } from "@/components/buy-seat-component";
 import { MapPin, Calendar } from "lucide-react";
 import { formatDate, formatTime } from "@/lib/utils";
 
@@ -42,14 +42,13 @@ interface TheatreMovieSeatsData {
   theatreMovieSeatsData: TheatreMovieSeatDto[];
   theatreData?: TheatreData;
   showTime?: { start: string; end: string };
-  movieTitle?: string;
+  movie?: TicketMovie;
 }
 
 async function fetchShowSeats(
   movieId: string,
   showId: string,
 ): Promise<TheatreMovieSeatsData> {
-  // Fetch seats
   const seatsRes = await fetch(
     `${env.NEXT_PUBLIC_SERVER_URL}/movies/${movieId}/${showId}`,
     { cache: "no-store" },
@@ -59,58 +58,13 @@ async function fetchShowSeats(
     throw new Error(`Failed to fetch seats: ${seatsRes.status}`);
   }
 
-  const seatsJson: ApiResponse<{ theatreMovieSeatsData: TheatreMovieSeatDto[] }> =
-    await seatsRes.json();
+  const seatsJson: ApiResponse<TheatreMovieSeatsData> = await seatsRes.json();
 
   if (!seatsJson.success) {
     throw new Error(seatsJson.message || "Failed to fetch theatre movie seats");
   }
 
-  // Fetch movie details (to get theatre + show time info)
-  const movieRes = await fetch(`${env.NEXT_PUBLIC_SERVER_URL}/movies/${movieId}`, {
-    cache: "no-store",
-  });
-
-  let theatreData: TheatreData | undefined;
-  let showTime: { start: string; end: string } | undefined;
-  let movieTitle: string | undefined;
-
-  if (movieRes.ok) {
-    const movieJson = await movieRes.json();
-    const data = movieJson?.data;
-    movieTitle = data?.movie?.title;
-
-    // Walk the datesWithTheatreTimings map to find the matching showId slot
-    const dateMap: Record<
-      string,
-      Record<
-        string,
-        {
-          theatreData: TheatreData;
-          dates: { start: string; end: string; showId: string }[];
-        }
-      >
-    > = data?.datesWithTheatreTimings ?? {};
-
-    outer: for (const dateKey of Object.keys(dateMap)) {
-      for (const theatreId of Object.keys(dateMap[dateKey])) {
-        const entry = dateMap[dateKey][theatreId];
-        const slot = entry.dates.find((d) => d.showId === showId);
-        if (slot) {
-          theatreData = entry.theatreData;
-          showTime = { start: slot.start, end: slot.end };
-          break outer;
-        }
-      }
-    }
-  }
-
-  return {
-    ...seatsJson.data,
-    theatreData,
-    showTime,
-    movieTitle,
-  };
+  return seatsJson.data;
 }
 
 function useShowSeats(movieId: string, showId: string) {
@@ -215,14 +169,14 @@ export default function ShowPage() {
     );
   }
 
-  const { theatreMovieSeatsData: seats, theatreData, showTime, movieTitle } = data;
+  const { theatreMovieSeatsData: seats, theatreData, showTime, movie } = data;
 
   return (
     <div className="pb-28 pt-6">
       {!isBuying && (
         <div className="mx-auto mb-2 max-w-2xl px-4">
           <p className="eyebrow">Select your seat</p>
-          <h1 className="font-display mt-1 text-2xl font-semibold">{movieTitle ?? "Showtime"}</h1>
+          <h1 className="font-display mt-1 text-2xl font-semibold">{movie?.title ?? "Showtime"}</h1>
           <div className="mt-2 flex flex-wrap gap-4 text-sm text-muted-foreground">
             {theatreData && (
               <span className="inline-flex items-center gap-1.5">
@@ -242,7 +196,7 @@ export default function ShowPage() {
       {isBuying && selectedSeat && (
         <BuyTheatreMovieSeat
           selectedSeat={selectedSeat}
-          movieTitle={movieTitle ?? "Movie"}
+          movie={movie ?? { title: "Movie" }}
           theatreData={theatreData ?? null}
           showTime={showTime ?? null}
         />

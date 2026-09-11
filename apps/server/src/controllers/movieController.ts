@@ -121,11 +121,23 @@ export async function getTheatreMovieSeatsController(req: Request, res: Response
 
     const theatreMovie = await prisma.show.findUnique({
       where: { id: showId },
+      include: { movie: true, theatre: true },
     });
     if (!theatreMovie) throw new ServerApiError("Invalid theatre movie id provided", 401);
 
     const seats = await getShowSeats(showId);
-    return res.status(200).json(apiJsonResponse(true, seats, "Successfully fetched theatre movie seats"));
+    return res.status(200).json(
+      apiJsonResponse(
+        true,
+        {
+          ...seats,
+          movie: theatreMovie.movie,
+          theatreData: theatreMovie.theatre,
+          showTime: { start: theatreMovie.startTime, end: theatreMovie.endTime },
+        },
+        "Successfully fetched theatre movie seats",
+      ),
+    );
   } catch (err) {
     next(err);
   }

@@ -38,6 +38,18 @@ export function formatDate(iso: string) {
   });
 }
 
+export function formatShowDuration(startIso: string, endIso: string) {
+  const start = new Date(startIso).getTime();
+  const end = new Date(endIso).getTime();
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
+  const mins = Math.round((end - start) / 60_000);
+  const hours = Math.floor(mins / 60);
+  const remainder = mins % 60;
+  if (hours && remainder) return `${hours}h ${remainder}m`;
+  if (hours) return `${hours}h`;
+  return `${remainder}m`;
+}
+
 export function isValidDate(date: Date) {
   return date instanceof Date && !Number.isNaN(date.getTime());
 }
